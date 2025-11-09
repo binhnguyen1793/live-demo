@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sports Live - Demo</title>
+<style>
+  :root{
+    --page:#0a0a0a; --topbar:#141414; --panel:#161616; --panel-2:#1c1c1e;
+    --line:#242424; --text:#e8e8f2; --text-dim:#c8cbe0;
+    --hover-bg: rgba(39,99,255,.25);
+    --active-1:#2763ff; --active-2:#3b84ff; --brand:#3b84ff;
+    --pad:16px; --left-col:280px; --right-col:360px;
+  }
+  @media (max-width:1200px){ :root{ --left-col:260px; --right-col:320px; } }
+  @media (max-width:990px){ :root{ --left-col:86px; --right-col:0px; } }
+  @media (max-width:640px){ :root{ --left-col:0px; --right-col:0px; } }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--page);color:var(--text-dim);line-height:1.45}
+  a{color:inherit;text-decoration:none}
+  .wrap{display:grid;grid-template-rows:auto 1fr;height:100%}
+
+  /* TOPBAR */
+  .topbar{background:var(--topbar);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+  .topbar-inner{display:grid;grid-template-columns: var(--left-col) 1fr var(--right-col);align-items:center;gap:14px;padding:10px var(--pad)}
+  .tb-left{display:flex;align-items:center;gap:10px}
+  #toggleGlobal{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#0f0f0f;border:1px solid var(--line);color:#dfe6ff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.7)}
+  .tb-sports{padding:7px 12px;border-radius:999px;background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#08121e;font-weight:800;border:1px solid transparent;box-shadow:0 0 16px rgba(59,132,255,.35);white-space:nowrap}
+  .tb-center{display:flex;align-items:center;gap:14px;justify-content:flex-start;min-width:0}
+  .brand{display:flex;align-items:center;gap:10px;color:#7fb4ff;font-weight:900;letter-spacing:.4px;font-size:18px;white-space:nowrap}
+  .brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--active-1),var(--active-2));box-shadow:0 0 0 2px rgba(0,0,0,.35) inset, 0 0 18px rgba(59,132,255,.25);display:grid;place-items:center;color:#06121f;font-weight:900}
+  .brand .name{background:linear-gradient(90deg,#79a9ff,#9fd0ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900; letter-spacing:.6px}
+  .menu{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line); background:#1a1a1d;color:#e8f1ff;font-weight:700; letter-spacing:.2px; opacity:.95;transition:.18s; white-space:nowrap}
+  .pill:hover{background:#232327}
+  .pill.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));border-color:transparent;color:#08121e;box-shadow:0 0 18px rgba(59,132,255,.35)}
+  .actions{display:flex;gap:10px;justify-content:flex-start}
+  @media (max-width:990px){ .actions{justify-content:flex-end} }
+  .btn{border:1px solid var(--line);background:#1a1a1d;color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;cursor:pointer;transition:.18s;white-space:nowrap}
+  .btn:hover{box-shadow:0 0 0 1px var(--line) inset;background:#232327}
+  .btn.primary{background:linear-gradient(90deg,var(--active-1),var(--active-2));border-color:transparent;color:#07121a;box-shadow:0 0 18px rgba(59,132,255,.25)}
+  .btn.primary:hover{filter:saturate(1.05); transform:translateY(-1px)}
+
+  /* LAYOUT */
+  .layout{display:grid;grid-template-columns: 280px 1fr 360px; gap:16px; padding:16px; height:100%}
+  @media (max-width:1200px){ .layout{grid-template-columns:260px 1fr 320px} }
+  @media (max-width:990px){ .layout{grid-template-columns: 86px 1fr} .right{display:none} }
+  @media (max-width:640px){ .layout{grid-template-columns: 1fr} .left{display:none} }
+
+  /* LEFT (sidebar) */
+  .left{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 10px 12px;position:relative;transition:width .3s ease, padding .3s ease;overflow:hidden}
+  .left .sb-head{display:flex;align-items:center;gap:10px;padding:6px 8px 10px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+  .left .sb-title{color:#fff;font-weight:900;letter-spacing:.4px}
+  .left .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .left .item{display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;cursor:pointer;transition: background .18s, box-shadow .18s, color .18s, border-color .18s;border:1px solid transparent;color:#e9edff; white-space:nowrap}
+  .left .item .icon{width:30px;height:30px;display:grid;place-items:center;font-size:20px;flex:0 0 30px; color:#ffffff;filter: drop-shadow(0 1px 0 rgba(0,0,0,.5))}
+  .left .item .label{font-weight:700; letter-spacing:.2px; opacity:.88}
+  .left .item:hover{background:var(--hover-bg);border-color:#2a4ddf;box-shadow: inset 0 0 0 1px rgba(42,77,223,.35), 0 2px 6px rgba(0,0,0,.5);color:#ffffff}
+  .left .item.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#ffffff;border-color:#3b84ff;box-shadow: 0 2px 6px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.06)}
+  .left .divider{height:1px;background:var(--line);margin:8px 0}
+  .left .partner{display:flex;gap:10px;align-items:center;color:#fff;opacity:.95;font-size:14px;margin-top:6px}
+  .left .partner .logo{width:24px;height:24px;display:grid;place-items:center;background:#0f0f0f;border:1px solid var(--line);border-radius:6px}
+  .left.collapsed{width:86px; padding:10px 8px 12px}
+  .left.collapsed .label, .left.collapsed .sb-title, .left.collapsed .partner-text{display:none}
+  .left.expanded{width:280px}
+
+  /* MIDDLE */
+  .middle{min-width:0}
+  .section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px}
+  .section h3{color:#fff;margin:0 0 10px;font-size:16px}
+  .placeholder{color:#c8cbe0;opacity:.8}
+
+  /* RIGHT (hẹp lại để hở phải) */
+  .right{position:relative}
+  .right-inner{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;
+    display:flex;flex-direction:column;gap:12px;width:78%;max-width:300px;margin-left:0;margin-right:auto;
+  }
+  @media (max-width:1200px){ .right-inner{ width:82%; max-width:280px } }
+
+  .scorebox{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;color:#fff;font-weight:800;letter-spacing:.4px}
+  .chat{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px;color:#e6ecff}
+  .chat .muted{opacity:.8;font-size:13px}
+  .chat .input{margin-top:8px; display:flex; gap:8px}
+  .chat input{flex:1; padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#0f0f0f;color:#eaf0ff}
+  .chat button{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:linear-gradient(90deg,var(--active-1),var(--active-2));font-weight:800;color:#0a1220;cursor:pointer}
+
+  /* POPUP NẠP TIỀN */
+  .promo-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:200}
+  .promo-modal{
+    background:linear-gradient(135deg,#1c1c1e,#161616);border:1px solid #242424;border-radius:18px;
+    width:340px;max-width:90%;padding:20px;text-align:center;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.7);
+    transform:scale(.85);opacity:0;animation:showPop .3s forwards ease; position:relative;
+  }
+  .promo-close{position:absolute;top:8px;right:10px;width:30px;height:30px;border-radius:8px;border:1px solid #242424;background:#0f0f0f;color:#ccc;cursor:pointer}
+  @keyframes showPop{to{transform:scale(1);opacity:1}}
+  .promo-form{display:grid;gap:10px;text-align:left}
+  .promo-form label{font-size:14px;color:#ccc;display:grid;gap:5px}
+  .promo-form input{padding:8px 10px;border-radius:8px;border:1px solid #242424;background:#1c1c1e;color:#fff;font-size:15px}
+  .promo-btn{margin-top:6px;padding:10px 12px;border:none;border-radius:10px;background:linear-gradient(90deg,#2763ff,#3b84ff);color:#07121a;font-weight:800;cursor:pointer;box-shadow:0 0 10px rgba(59,132,255,.3)}
+  .promo-btn:hover{filter:saturate(1.1)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="tb-left">
+          <button id="toggleGlobal" aria-label="Toggle sidebar">«</button>
+          <span class="tb-sports">Sports</span>
+        </div>
+        <div class="tb-center">
+          <div class="brand"><div class="logo">8X</div><div class="name">8Xbet</div></div>
+          <nav class="menu" aria-label="Main">
+            <a class="pill active" href="#"><span>Sports</span></a>
+            <a class="pill" href="#"><span>Casino</span></a>
+          </nav>
+        </div>
+        <div class="actions">
+          <button class="btn" id="btn-login">Log in</button>
+          <button class="btn primary" id="btn-signup">Sign up</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- LEFT -->
+      <aside id="sidebar" class="left expanded" aria-label="Main navigation">
+        <div class="sb-head"><div class="sb-title">Sports</div></div>
+        <nav class="nav">
+          <div class="item active"><div class="icon">🏠</div><div class="label">Home</div></div>
+          <div class="item"><div class="icon">⚽</div><div class="label">Soccer</div></div>
+          <div class="item"><div class="icon">🏀</div><div class="label">Basketball</div></div>
+          <div class="item"><div class="icon">🎾</div><div class="label">Tennis</div></div>
+          <div class="item"><div class="icon">🎰</div><div class="label">Casino</div></div>
+          <div class="divider"></div>
+          <div class="partner"><div class="logo">💙</div><div class="partner-text">Official Partner<br>Chelsea FC</div></div>
+        </nav>
+      </aside>
+
+      <!-- MIDDLE -->
+      <main class="middle">
+        <section class="section">
+          <h3>Trang demo</h3>
+          <p class="placeholder">Nội dung minh hoạ. Nhấn <b>Log in</b>, <b>Sign up</b> hoặc nút <b>Send</b> bên phải để mở popup nạp tiền 100%.</p>
+        </section>
+      </main>
+
+      <!-- RIGHT -->
+      <aside class="right">
+        <div class="right-inner">
+          <div class="scorebox">0 — 0</div>
+          <div class="chat">
+            <div class="row"><div class="white" style="font-weight:800">Chat</div><div class="muted">Online: 128</div></div>
+            <div class="muted" style="margin-top:6px">Nhập tin nhắn và nhấn Gửi để mở popup.</div>
+            <div class="input">
+              <input id="chat-input" placeholder="Type something…"/>
+              <button id="chat-send">Send</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- POPUP NẠP TIỀN 100% -->
+  <div class="promo-overlay" id="promo-overlay">
+    <div class="promo-modal">
+      <button class="promo-close" id="promo-close">×</button>
+      <h2>🎁 Tặng 100% nạp lần đầu</h2>
+      <p class="promo-sub">Nhập thông tin bên dưới để nhận khuyến mãi gấp đôi số tiền nạp!</p>
+
+      <form id="promo-form" class="promo-form" autocomplete="off">
+        <label>Họ tên (*)
+          <input type="text" id="promo-name" required placeholder="Nguyễn Văn A">
+        </label>
+        <label>Số điện thoại (*)
+          <input type="tel" id="promo-phone" required placeholder="09xxxxxxxx">
+        </label>
+        <label>Số tiền nạp (*)
+          <input type="number" id="promo-amount" min="10000" step="1000" required placeholder="Nhập số tiền">
+        </label>
+        <p id="promo-bonus" style="margin:4px 0 10px;color:#8ef;display:none;"></p>
+        <button type="submit" class="promo-btn">Đăng ký & Nạp</button>
+      </form>
+
+      <div id="promo-qrbox" style="display:none;margin-top:12px;">
+        <p id="promo-status"><b>Đang lấy mã QR tự động...</b> Vui lòng chờ khoảng <b>2 phút</b></p>
+        <div id="promo-countdown" style="font-size:22px;font-weight:800;margin:8px 0;">02:00</div>
+        <div id="promo-qrimg"></div>
+
+        <!-- PHẦN UPLOAD: ẩn cho đến khi QR có -->
+        <div id="promo-proof" style="margin-top:10px;display:none;">
+          <label>Ảnh xác nhận chuyển khoản:
+            <input type="file" id="promo-upload" accept="image/*">
+          </label>
+          <button id="promo-confirm" class="promo-btn" type="button">Đã chuyển khoản</button>
+          <p id="promo-msg" style="font-size:13px;margin-top:6px;color:#ccc;">
+            ⚠️ Nếu mã QR không hợp lệ hoặc đã được sử dụng, vui lòng tải lại trang để tạo mã mới.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* Sidebar toggle (giữ nguyên) */
+const sidebar = document.getElementById('sidebar');
+const toggleGlobal = document.getElementById('toggleGlobal');
+function setExpanded(exp){
+  if(exp){ sidebar.classList.add('expanded'); sidebar.classList.remove('collapsed'); toggleGlobal.textContent='«'; }
+  else{ sidebar.classList.add('collapsed'); sidebar.classList.remove('expanded'); toggleGlobal.textContent='»'; }
+}
+setExpanded(true);
+toggleGlobal.addEventListener('click', ()=> setExpanded(!sidebar.classList.contains('expanded')));
+
+/* === POPUP EVENTS: mở bằng Log in / Sign up / Send === */
+const overlay = document.getElementById('promo-overlay');
+const closeBtn = document.getElementById('promo-close');
+const openPopup = ()=>{ overlay.style.display='flex'; };
+// Auto open on first load
+window.addEventListener('DOMContentLoaded', openPopup);
+const closePopup = ()=>{ overlay.style.display='none'; resetPopup(); };
+document.getElementById('btn-login').onclick = openPopup;
+document.getElementById('btn-signup').onclick = openPopup;
+document.getElementById('chat-send').onclick = (e)=>{ e.preventDefault(); openPopup(); };
+closeBtn.onclick = closePopup;
+
+/* === Form & QR logic === */
+const form = document.getElementById('promo-form');
+const nameEl = document.getElementById('promo-name');
+const phoneEl = document.getElementById('promo-phone');
+const amountEl = document.getElementById('promo-amount');
+const bonusEl = document.getElementById('promo-bonus');
+
+const qrbox = document.getElementById('promo-qrbox');
+const statusEl = document.getElementById('promo-status');
+const qrimg = document.getElementById('promo-qrimg');
+const countdownEl = document.getElementById('promo-countdown');
+const proof = document.getElementById('promo-proof');
+const upload = document.getElementById('promo-upload');
+const confirmBtn = document.getElementById('promo-confirm');
+const msg = document.getElementById('promo-msg');
+
+let countdownTimer = null;
+
+amountEl.addEventListener('input', ()=>{
+  const v = parseFloat(amountEl.value)||0;
+  if(v>0){
+    bonusEl.style.display='block';
+    bonusEl.innerHTML = `💰 Số tiền nhận được: <b>${(v*2).toLocaleString('vi-VN')} đ</b>`;
+  }else{
+    bonusEl.style.display='none';
+  }
+});
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.trim();
+  const amount = parseFloat(amountEl.value)||0;
+  if(!name || !phone || !amount){ alert('Vui lòng nhập đủ Họ tên, SĐT và Số tiền.'); return; }
+
+  // Bật khối QR + đếm ngược + ẩn khu vực upload cho tới khi có QR
+  qrbox.style.display = 'block';
+  proof.style.display = 'none';
+  qrimg.innerHTML = '';
+  msg.style.color = '#ccc';
+  statusEl.innerHTML = `<b>Đang lấy mã QR tự động...</b> Vui lòng chờ khoảng <b>2 phút</b>`;
+  startCountdown(120);
+
+  try{
+    const url = await fetchQR(amount);
+    qrimg.innerHTML = `<img src="${url}" style="max-width:240px;border-radius:10px;margin-top:8px;">`;
+    statusEl.innerHTML = '<b>Vui lòng quét mã QR bên dưới để thanh toán</b>';
+    proof.style.display = 'block'; // Chỉ hiện upload + xác nhận sau khi QR có
+  }catch(err){
+    qrimg.innerHTML = '<p style="color:red">Lỗi tạo mã QR. Vui lòng thử lại sau.</p>';
+  }
+});
+
+confirmBtn.onclick = ()=>{
+  if(!upload.files.length){
+    msg.style.color = 'red';
+    msg.textContent = 'Vui lòng gửi ảnh xác nhận chuyển khoản trước khi xác nhận.';
+    return;
+  }
+  msg.style.color = 'limegreen';
+  msg.textContent = '✅ Giao dịch thành công! Vui lòng kiểm tra email hoặc SMS để xác nhận.';
+};
+
+function startCountdown(sec){
+  clearInterval(countdownTimer);
+  let t = sec;
+  const tick = ()=>{
+    const m = String(Math.floor(t/60)).padStart(2,'0');
+    const s = String(t%60).padStart(2,'0');
+    countdownEl.textContent = `${m}:${s}`;
+    if(--t<0) clearInterval(countdownTimer);
+  };
+  tick(); countdownTimer = setInterval(tick,1000);
+}
+
+async function fetchQR(price){
+  const res = await fetch("https://per-fashion-aquarium-boy.trycloudflare.com/run-bot",{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:"price="+encodeURIComponent(price)
+  });
+  if(!res.ok) throw new Error("HTTP "+res.status);
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}
+
+function resetPopup(){
+  // Dọn form/popup khi đóng
+  form.reset();
+  bonusEl.style.display='none';
+  qrbox.style.display='none';
+  proof.style.display='none';
+  qrimg.innerHTML='';
+  msg.textContent = '⚠️ Nếu mã QR không hợp lệ hoặc đã được sử dụng, vui lòng tải lại trang để tạo mã mới.';
+  msg.style.color='#ccc';
+  clearInterval(countdownTimer);
+  countdownEl.textContent='02:00';
+}
+</script>
+</body>
+</html>
