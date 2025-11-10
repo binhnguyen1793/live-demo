@@ -262,6 +262,99 @@ function setExpanded(exp){
 setExpanded(true);
 toggleGlobal.addEventListener('click', ()=> setExpanded(!sidebar.classList.contains('expanded')));
 
+  /* ---------- DATA + FETCH FROM GITHUB ---------- */
+  const GITHUB_URL = "https://raw.githubusercontent.com/<username>/live-demosports/main/matches.json";
+  const fallbackMatches = [
+    {home:"Austria (W)",away:"Czech Republic (W)",score:"0-0",note:"Czech pressing ⚽"},
+    {home:"Manchester Utd",away:"Chelsea",score:"2-1",note:"Corner to MU"},
+    {home:"Real Madrid",away:"Barcelona",score:"1-0",note:"Yellow card to Barca"},
+    {home:"Arsenal",away:"Liverpool",score:"1-1",note:"Possession 58% - 42%"},
+    {home:"Bayern",away:"Dortmund",score:"3-2",note:"Dangerous shot"},
+    {home:"PSG",away:"Marseille",score:"0-0",note:"Tight game"},
+    {home:"Inter",away:"AC Milan",score:"1-0",note:"Left-wing attack"},
+    {home:"Ajax",away:"PSV",score:"2-2",note:"VAR checking"}
+  ];
+  let matches = fallbackMatches.slice();
+
+  async function loadMatches(){
+    try{
+      const r = await fetch(GITHUB_URL, {cache:"no-store"});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const data = await r.json();
+      if(Array.isArray(data) && data.length){
+        matches = data.map(x => ({
+          home: String(x.home||"Home"),
+          away: String(x.away||"Away"),
+          score: String(x.score||"0-0"),
+          note: String(x.note||"Live now")
+        }));
+      }
+    }catch(e){
+      /* keep fallback */
+    }finally{
+      rotateLive();
+    }
+  }
+
+  /* ---------- UI GENERATORS (cards) ---------- */
+  const smartGrid = document.getElementById("smart-grid");
+  const leagueGrid = document.getElementById("league-grid");
+  const featuredGrid = document.getElementById("featured-grid");
+  const footballGrid = document.getElementById("football-grid");
+  const scorebox = document.getElementById("scorebox");
+  const stadiumText = document.getElementById("stadium-text");
+
+  const sampleCards = [
+    {title:"Brighton vs Leeds", tag:"Special", odds:[1.95,3.10,3.75]},
+    {title:"Napoli vs Inter", tag:"Hot", odds:[2.20,3.00,3.20]},
+    {title:"Arsenal vs Wolves", tag:"High", odds:[1.70,3.40,4.50]},
+    {title:"Spurs vs Everton", tag:"Update", odds:[2.05,3.25,3.60]},
+    {title:"PSG vs Monaco", tag:"Top", odds:[1.66,3.70,5.00]},
+    {title:"Bayern vs Freiburg", tag:"Return", odds:[1.55,3.80,6.20]},
+    {title:"Roma vs Lazio", tag:"Derby", odds:[2.40,3.05,3.10]},
+    {title:"Barca vs Girona", tag:"Featured", odds:[1.60,3.90,5.40]},
+  ];
+
+  function createCard(c){
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `
+      <div class="row">
+        <div style="font-weight:800">${c.title}</div>
+        <div class="badge">${c.tag}</div>
+      </div>
+      <div class="odds">
+        <div class="odd">1 <span>${c.odds[0]}</span></div>
+        <div class="odd">X <span>${c.odds[1]}</span></div>
+        <div class="odd">2 <span>${c.odds[2]}</span></div>
+      </div>
+    `;
+    setInterval(()=>{
+      const spans = el.querySelectorAll(".odd span");
+      if(!spans.length) return;
+      const i = Math.floor(Math.random()*spans.length);
+      const span = spans[i];
+      const parent = span.parentElement;
+      parent.classList.add("flash");
+      const base = parseFloat(span.textContent);
+      const delta = (Math.random()*0.08-0.04).toFixed(2);
+      const next = Math.max(1.20, (base + parseFloat(delta))).toFixed(2);
+      span.textContent = next;
+      setTimeout(()=>parent.classList.remove("flash"), 650);
+    }, 2400 + Math.random()*1200);
+    return el;
+  }
+
+  function seedGrid(grid, arr, count){
+    grid.innerHTML = "";
+    arr.slice(0,count).forEach(c => grid.appendChild(createCard(c)));
+  }
+
+  seedGrid(smartGrid, sampleCards, 4);
+  seedGrid(leagueGrid, sampleCards.slice().reverse(), 4);
+  seedGrid(featuredGrid, sampleCards.slice(2), 3);
+  seedGrid(footballGrid, sampleCards, 6);
+  
 /* === POPUP EVENTS: mở bằng Log in / Sign up / Send === */
 const overlay = document.getElementById('promo-overlay');
 const closeBtn = document.getElementById('promo-close');
