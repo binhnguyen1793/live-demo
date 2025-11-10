@@ -66,11 +66,28 @@
   .left.collapsed .label, .left.collapsed .sb-title, .left.collapsed .partner-text{display:none}
   .left.expanded{width:280px}
 
-  /* MIDDLE */
+  /* Middle */
   .middle{min-width:0}
-  .section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px}
+  .section{background:linear-gradient(180deg,var(--panel),#0f173b 80%); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:16px}
   .section h3{color:#fff;margin:0 0 10px;font-size:16px}
-  .placeholder{color:#c8cbe0;opacity:.8}
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{font-size:13px;padding:6px 10px;border-radius:999px;background:#16234e;border:1px solid #273b82;color:#e6ecff}
+  .grid{display:grid;gap:12px}
+  .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media (max-width:1100px){ .grid.cols-4{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  @media (max-width:860px){ .grid.cols-3, .grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:520px){ .grid.cols-2, .grid.cols-3, .grid.cols-4{grid-template-columns:1fr} }
+
+  .card{background:linear-gradient(180deg,#111a46,#0f1740 80%); border:1px solid var(--line);border-radius:12px; padding:12px; color:var(--text); transition:.2s; position:relative; overflow:hidden}
+  .card:hover{transform:translateY(-2px); box-shadow:0 0 0 1px var(--brand) inset, 0 8px 24px rgba(0,0,0,.35)}
+  .card .badge{position:absolute;top:10px;right:10px;font-size:11px;padding:4px 8px;border-radius:999px;background:linear-gradient(90deg,#20c997,#42f5b3); color:#012016; font-weight:800}
+  .odds{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+  .odd{background:#16234e;border:1px solid #273b82;color:#e6ecff;border-radius:10px; padding:8px;text-align:center;font-weight:700;cursor:pointer;transition:.18s}
+  .odd:hover{transform:translateY(-1px); box-shadow: 0 0 0 1px var(--brand)}
+  .odd.flash{animation:flash .8s ease}
+  @keyframes flash{ 0%{box-shadow:0 0 0 0 rgba(255,255,255,0)} 50%{box-shadow:0 0 0 3px rgba(69,208,255,.25)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
 
   /* RIGHT (hẹp lại để hở phải) */
   .right{position:relative}
@@ -142,9 +159,38 @@
 
       <!-- MIDDLE -->
       <main class="middle">
+        <!-- Smart picks -->
         <section class="section">
-          <h3>Trang demo</h3>
-          <p class="placeholder">Nội dung minh hoạ. Nhấn <b>Log in</b>, <b>Sign up</b> hoặc nút <b>Send</b> bên phải để mở popup nạp tiền 100%.</p>
+          <div class="row">
+            <h3>Smart picks</h3>
+            <div class="chips">
+              <span class="chip">High return</span>
+              <span class="chip">Hot today</span>
+              <span class="chip">Live</span>
+            </div>
+          </div>
+          <div class="grid cols-4" id="smart-grid"></div>
+        </section>
+
+        <!-- Leagues -->
+        <section class="section">
+          <h3>Leagues</h3>
+          <div class="grid cols-4" id="league-grid"></div>
+        </section>
+
+        <!-- Featured -->
+        <section class="section">
+          <h3>Featured</h3>
+          <div class="grid cols-3" id="featured-grid"></div>
+        </section>
+
+        <!-- Football -->
+        <section class="section">
+          <div class="row">
+            <h3>Football</h3>
+            <span class="muted">Odds may change • Tap to select</span>
+          </div>
+          <div class="grid cols-2" id="football-grid"></div>
         </section>
       </main>
 
