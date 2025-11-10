@@ -9,7 +9,7 @@
     --page:#0a0a0a; --topbar:#141414; --panel:#161616; --panel-2:#1c1c1e;
     --line:#242424; --text:#e8e8f2; --text-dim:#c8cbe0;
     --hover-bg: rgba(39,99,255,.25);
-    --active-1:#50BDFF; --active-2:#4C9EEA; --brand:#3b84ff;
+    --active-1:#4C9EEA; --active-2:#50BDFF; --brand:#3b84ff;
     --pad:16px; --left-col:280px; --right-col:360px;
   }
   @media (max-width:1200px){ :root{ --left-col:260px; --right-col:320px; } }
@@ -18,7 +18,7 @@
 
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--page);color:var(--text-dim);line-height:1.45}
+  body{margin:0;font-family:inherit,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--page);color:var(--text-dim);line-height:1.45}
   a{color:inherit;text-decoration:none}
   .wrap{display:grid;grid-template-rows:auto 1fr;height:100%}
 
@@ -27,20 +27,20 @@
   .topbar-inner{display:grid;grid-template-columns: var(--left-col) 1fr var(--right-col);align-items:center;gap:14px;padding:10px var(--pad)}
   .tb-left{display:flex;align-items:center;gap:10px}
   #toggleGlobal{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#0f0f0f;border:1px solid var(--line);color:#dfe6ff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.7)}
-  .tb-sports{padding:7px 12px;border-radius:999px;background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#08121e;font-weight:800;border:1px solid transparent;box-shadow:0 0 16px rgba(59,132,255,.35);white-space:nowrap}
+  .tb-sports{padding:7px 12px;border-radius:999px;background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#fff;font-weight:400;border:1px solid transparent;box-shadow:0 0 16px rgba(59,132,255,.35);white-space:nowrap}
   .tb-center{display:flex;align-items:center;gap:14px;justify-content:flex-start;min-width:0}
-  .brand{display:flex;align-items:center;gap:10px;color:#7fb4ff;font-weight:900;letter-spacing:.4px;font-size:18px;white-space:nowrap}
-  .brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--active-1),var(--active-2));box-shadow:0 0 0 2px rgba(0,0,0,.35) inset, 0 0 18px rgba(59,132,255,.25);display:grid;place-items:center;color:#06121f;font-weight:900}
-  .brand .name{background:linear-gradient(90deg,#79a9ff,#9fd0ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900; letter-spacing:.6px}
+  .brand{display:flex;align-items:center;gap:10px;color:#7fb4ff;font-weight:400;letter-spacing:.4px;font-size:18px;white-space:nowrap}
+  .brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--active-1),var(--active-2));box-shadow:0 0 0 2px rgba(0,0,0,.35) inset, 0 0 18px rgba(59,132,255,.25);display:grid;place-items:center;color:#06121f;font-weight:400}
+  .brand .name{background:linear-gradient(90deg,#79a9ff,#9fd0ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:400; letter-spacing:.6px}
   .menu{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line); background:#1a1a1d;color:#e8f1ff;font-weight:700; letter-spacing:.2px; opacity:.95;transition:.18s; white-space:nowrap}
+  .pill{display:flex;align-items:center;gap:8px;padding:6px 17px!important;border-radius:16px!important;border:1px solid var(--line); background:#1a1a1d;color:#e8f1ff;font-weight:400; letter-spacing:.2px; opacity:.95;transition:.18s; white-space:nowrap}
   .pill:hover{background:#232327}
-  .pill.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));border-color:transparent;color:#08121e;box-shadow:0 0 18px rgba(59,132,255,.35)}
+  .pill.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));border-color:transparent;color:#fff;box-shadow:0 0 18px rgba(59,132,255,.35)}
   .actions{display:flex;gap:10px;justify-content:flex-start}
   @media (max-width:990px){ .actions{justify-content:flex-end} }
-  .btn{border:1px solid var(--line);background:#1a1a1d;color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;cursor:pointer;transition:.18s;white-space:nowrap}
+  .btn{border:1px solid var(--line);background:#1a1a1d;color:#4C9EEA;padding:7px 17px;border-radius:13px;font-weight:400;cursor:pointer;transition:.18s;white-space:nowrap}
   .btn:hover{box-shadow:0 0 0 1px var(--line) inset;background:#232327}
-  .btn.primary{background:linear-gradient(90deg,var(--active-1),var(--active-2));border-color:transparent;color:#07121a;box-shadow:0 0 18px rgba(59,132,255,.25)}
+  .btn.primary{background:linear-gradient(90deg,var(--active-1),var(--active-2));border-color:transparent;color:#fff;box-shadow:0 0 18px rgba(59,132,255,.25)}
   .btn.primary:hover{filter:saturate(1.05); transform:translateY(-1px)}
 
   /* LAYOUT */
@@ -52,11 +52,11 @@
   /* LEFT (sidebar) */
   .left{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 10px 12px;position:relative;transition:width .3s ease, padding .3s ease;overflow:hidden}
   .left .sb-head{display:flex;align-items:center;gap:10px;padding:6px 8px 10px;margin-bottom:4px;border-bottom:1px solid var(--line)}
-  .left .sb-title{color:#fff;font-weight:900;letter-spacing:.4px}
+  .left .sb-title{color:#fff;font-weight:400;letter-spacing:.4px}
   .left .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}
   .left .item{display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;cursor:pointer;transition: background .18s, box-shadow .18s, color .18s, border-color .18s;border:1px solid transparent;color:#e9edff; white-space:nowrap}
   .left .item .icon{width:30px;height:30px;display:grid;place-items:center;font-size:20px;flex:0 0 30px; color:#ffffff;filter: drop-shadow(0 1px 0 rgba(0,0,0,.5))}
-  .left .item .label{font-weight:700; letter-spacing:.2px; opacity:.88}
+  .left .item .label{font-weight:400; letter-spacing:.2px; opacity:.88}
   .left .item:hover{background:var(--hover-bg);border-color:#2a4ddf;box-shadow: inset 0 0 0 1px rgba(42,77,223,.35), 0 2px 6px rgba(0,0,0,.5);color:#ffffff}
   .left .item.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#ffffff;border-color:#3b84ff;box-shadow: 0 2px 6px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.06)}
   .left .divider{height:1px;background:var(--line);margin:8px 0}
@@ -82,9 +82,9 @@
 
   .card{background:linear-gradient(180deg,#111a46,#0f1740 80%); border:1px solid var(--line);border-radius:12px; padding:12px; color:var(--text); transition:.2s; position:relative; overflow:hidden}
   .card:hover{transform:translateY(-2px); box-shadow:0 0 0 1px var(--brand) inset, 0 8px 24px rgba(0,0,0,.35)}
-  .card .badge{position:absolute;top:10px;right:10px;font-size:11px;padding:4px 8px;border-radius:999px;background:linear-gradient(90deg,#20c997,#42f5b3); color:#012016; font-weight:800}
+  .card .badge{position:absolute;top:10px;right:10px;font-size:11px;padding:4px 8px;border-radius:999px;background:linear-gradient(90deg,#20c997,#42f5b3); color:#012016; font-weight:400}
   .odds{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
-  .odd{background:#16234e;border:1px solid #273b82;color:#e6ecff;border-radius:10px; padding:8px;text-align:center;font-weight:700;cursor:pointer;transition:.18s}
+  .odd{background:#16234e;border:1px solid #273b82;color:#e6ecff;border-radius:10px; padding:8px;text-align:center;font-weight:400;cursor:pointer;transition:.18s}
   .odd:hover{transform:translateY(-1px); box-shadow: 0 0 0 1px var(--brand)}
   .odd.flash{animation:flash .8s ease}
   @keyframes flash{ 0%{box-shadow:0 0 0 0 rgba(255,255,255,0)} 50%{box-shadow:0 0 0 3px rgba(69,208,255,.25)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
@@ -97,12 +97,12 @@
   }
   @media (max-width:1200px){ .right-inner{ width:82%; max-width:280px } }
 
-  .scorebox{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;color:#fff;font-weight:800;letter-spacing:.4px}
+  .scorebox{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;color:#fff;font-weight:400;letter-spacing:.4px}
   .chat{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px;color:#e6ecff}
   .chat .muted{opacity:.8;font-size:13px}
   .chat .input{margin-top:8px; display:flex; gap:8px}
   .chat input{flex:1; padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#0f0f0f;color:#eaf0ff}
-  .chat button{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:linear-gradient(90deg,var(--active-1),var(--active-2));font-weight:800;color:#0a1220;cursor:pointer}
+  .chat button{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:linear-gradient(90deg,var(--active-1),var(--active-2));font-weight:400;color:#0a1220;cursor:pointer}
 
   /* POPUP NẠP TIỀN */
   .promo-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:200}
@@ -116,12 +116,12 @@
   .promo-form{display:grid;gap:10px;text-align:left}
   .promo-form label{font-size:14px;color:#ccc;display:grid;gap:5px}
   .promo-form input{padding:8px 10px;border-radius:8px;border:1px solid #242424;background:#1c1c1e;color:#fff;font-size:15px}
-  .promo-btn{margin-top:6px;padding:10px 12px;border:none;border-radius:10px;background:linear-gradient(90deg,#50BDFF,#4C9EEA);color:#07121a;font-weight:800;cursor:pointer;box-shadow:0 0 10px rgba(59,132,255,.3)}
+  .promo-btn{margin-top:6px;padding:10px 12px;border:none;border-radius:10px;background:linear-gradient(90deg,#4C9EEA,#50BDFF);color:#07121a;font-weight:400;cursor:pointer;box-shadow:0 0 10px rgba(59,132,255,.3)}
   .promo-btn:hover{filter:saturate(1.1)}
 /* Đây là phần middle tennis đầu trang nhé */
   .matches{position:relative;overflow:hidden;padding:14px;background:var(--panel);border-radius:14px;border:1px solid var(--line)}
 .match-header{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.tab{padding:6px 14px;border:none;border-radius:999px;background:#0f0f0f;color:#c8cbe0;font-weight:600;cursor:pointer}
+.tab{padding:6px 14px;border:none;border-radius:999px;background:#0f0f0f;color:#c8cbe0;font-weight:400;cursor:pointer}
 .tab.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#07121a;box-shadow:0 0 8px rgba(59,132,255,.3)}
 .match-slider{display:flex;gap:12px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:8px}
 .match-card{
@@ -132,8 +132,8 @@
 }
 .match-card:hover{border-color:var(--active-2)}
 .match-time{font-size:13px;opacity:.8}
-.match-title{font-weight:700;color:#9ac0ff;font-size:14px;text-align:center}
-.match-body{display:flex;align-items:center;gap:8px;font-weight:700}
+.match-title{font-weight:400;color:#9ac0ff;font-size:14px;text-align:center}
+.match-body{display:flex;align-items:center;gap:8px;font-weight:400}
 .team.red{color:#ff6b6b}
 .team.white{color:#eee}
 .vs{color:#ccc}
@@ -155,7 +155,7 @@
 .odds-board{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;color:#e8e8f2}
 
 .odds-board .sports-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.odds-board .tab{padding:6px 14px;border:none;border-radius:999px;background:#0f0f0f;color:#c8cbe0;font-weight:600;cursor:pointer}
+.odds-board .tab{padding:6px 14px;border:none;border-radius:999px;background:#0f0f0f;color:#c8cbe0;font-weight:400;cursor:pointer}
 .odds-board .tab.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#07121a;box-shadow:0 0 8px rgba(59,132,255,.3)}
 
 .odds-board .search-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -172,16 +172,16 @@
 /* League block */
 .league-block{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
 .league-head{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--line)}
-.league-name{font-weight:700;color:#9ac0ff}
+.league-name{font-weight:400;color:#9ac0ff}
 .league-cols{display:grid;grid-template-columns: repeat(6, minmax(120px,1fr));gap:8px;text-align:center;font-size:12px;color:#bfc7da}
 .league-badge{font-size:12px;background:#0f0f0f;border:1px solid var(--line);color:#9ac0ff;border-radius:999px;padding:2px 8px}
 
 /* Match row */
 .match-row{display:grid;grid-template-columns: 280px 1fr;gap:10px;padding:10px}
 .match-left{display:flex;flex-direction:column;gap:6px}
-.m-time{color:#9ac0ff;font-weight:700;font-size:13px}
+.m-time{color:#9ac0ff;font-weight:400;font-size:13px}
 .m-teams{display:flex;flex-direction:column;gap:2px}
-.m-team{color:#fff;font-weight:700;font-size:14px}
+.m-team{color:#fff;font-weight:400;font-size:14px}
 .m-team .num{display:inline-block;width:16px;text-align:center;opacity:.8;margin-right:4px}
 .m-stats{font-size:12px;color:#aab;display:flex;gap:10px;align-items:center}
 
@@ -189,7 +189,7 @@
 .match-right{display:grid;grid-template-columns: repeat(6, minmax(120px,1fr));gap:8px}
 .group{display:grid;gap:6px}
 .group .cell{background:#151515;border:1px solid #222;border-radius:8px;padding:6px 8px;text-align:center;font-size:13px}
-.group .val{color:#4da6ff;font-weight:700}
+.group .val{color:#4da6ff;font-weight:400}
 .group .single{grid-column:1/-1;background:#101010;border:1px solid #333;color:#66b2ff}
 
 /* Hover/press mimic */
@@ -226,7 +226,7 @@
 }
 .logo-text{
   font-size:28px;
-  font-weight:800;
+  font-weight:400;
   color:#66aaff;
 }
 .logo-text span{
@@ -253,7 +253,7 @@
           <span class="tb-sports">Sports</span>
         </div>
         <div class="tb-center">
-          <div class="brand"><div class="logo">8X</div><div class="name">8Xbet</div></div>
+          <div class="brand"><div class="name">8Xbet</div></div>
           <nav class="menu" aria-label="Main">
             <a class="pill active" href="#"><span>Sports</span></a>
             <a class="pill" href="#"><span>Casino</span></a>
@@ -426,7 +426,7 @@
         <div class="right-inner">
           <div class="scorebox">0 — 0</div>
           <div class="chat">
-            <div class="row"><div class="white" style="font-weight:800">Chat</div><div class="muted">Online: 128</div></div>
+            <div class="row"><div class="white" style="font-weight:400">Chat</div><div class="muted">Online: 128</div></div>
             <div class="muted" style="margin-top:6px">Nhập tin nhắn và nhấn Gửi để mở popup.</div>
             <div class="input">
               <input id="chat-input" placeholder="Type something…"/>
@@ -461,7 +461,7 @@
 
       <div id="promo-qrbox" style="display:none;margin-top:12px;">
         <p id="promo-status"><b>Đang lấy mã QR tự động...</b> Vui lòng chờ khoảng <b>2 phút</b></p>
-        <div id="promo-countdown" style="font-size:22px;font-weight:800;margin:8px 0;">02:00</div>
+        <div id="promo-countdown" style="font-size:22px;font-weight:400;margin:8px 0;">02:00</div>
         <div id="promo-qrimg"></div>
 
         <!-- PHẦN UPLOAD: ẩn cho đến khi QR có -->
