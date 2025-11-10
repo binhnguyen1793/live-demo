@@ -118,6 +118,130 @@
   .promo-form input{padding:8px 10px;border-radius:8px;border:1px solid #242424;background:#1c1c1e;color:#fff;font-size:15px}
   .promo-btn{margin-top:6px;padding:10px 12px;border:none;border-radius:10px;background:linear-gradient(90deg,#2763ff,#3b84ff);color:#07121a;font-weight:800;cursor:pointer;box-shadow:0 0 10px rgba(59,132,255,.3)}
   .promo-btn:hover{filter:saturate(1.1)}
+/* Đây là phần middle tennis đầu trang nhé */
+  .matches{position:relative;overflow:hidden;padding:14px;background:var(--panel);border-radius:14px;border:1px solid var(--line)}
+.match-header{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.tab{padding:6px 14px;border:none;border-radius:999px;background:#0f0f0f;color:#c8cbe0;font-weight:600;cursor:pointer}
+.tab.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#07121a;box-shadow:0 0 8px rgba(59,132,255,.3)}
+.match-slider{display:flex;gap:12px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:8px}
+.match-card{
+  flex:0 0 200px;background:var(--panel-2);border:1px solid var(--line);
+  border-radius:12px;padding:10px;min-width:200px;color:#fff;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  box-shadow:0 2px 4px rgba(0,0,0,.4)
+}
+.match-card:hover{border-color:var(--active-2)}
+.match-time{font-size:13px;opacity:.8}
+.match-title{font-weight:700;color:#9ac0ff;font-size:14px;text-align:center}
+.match-body{display:flex;align-items:center;gap:8px;font-weight:700}
+.team.red{color:#ff6b6b}
+.team.white{color:#eee}
+.vs{color:#ccc}
+.match-odds{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font-size:13px;text-align:center;margin-top:4px;color:#e8e8f2}
+.scroll-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:28px;height:60px;border:none;border-radius:8px;
+  background:rgba(20,20,20,.7);color:#9ac0ff;font-size:24px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:.2s
+}
+.scroll-btn:hover{background:rgba(59,132,255,.25)}
+.scroll-btn.left{left:4px}
+.scroll-btn.right{right:4px}
+
+/* Đây là phần middle thứ 2 nhé  */
+
+/* ===== Odds Board (full block) ===== */
+.odds-board{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;color:#e8e8f2}
+
+.odds-board .sports-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.odds-board .tab{padding:6px 14px;border:none;border-radius:999px;background:#0f0f0f;color:#c8cbe0;font-weight:600;cursor:pointer}
+.odds-board .tab.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#07121a;box-shadow:0 0 8px rgba(59,132,255,.3)}
+
+.odds-board .search-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.odds-board .search-bar input{flex:1;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#0f0f0f;color:#fff}
+
+.switch{position:relative;display:inline-block;width:40px;height:20px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#444;transition:.4s;border-radius:34px}
+.slider:before{content:"";position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.4s}
+.switch input:checked + .slider{background:linear-gradient(90deg,var(--active-1),var(--active-2))}
+.switch input:checked + .slider:before{transform:translateX(18px)}
+.switch-label{font-size:13px;opacity:.8}
+
+/* League block */
+.league-block{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.league-head{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--line)}
+.league-name{font-weight:700;color:#9ac0ff}
+.league-cols{display:grid;grid-template-columns: repeat(6, minmax(120px,1fr));gap:8px;text-align:center;font-size:12px;color:#bfc7da}
+.league-badge{font-size:12px;background:#0f0f0f;border:1px solid var(--line);color:#9ac0ff;border-radius:999px;padding:2px 8px}
+
+/* Match row */
+.match-row{display:grid;grid-template-columns: 280px 1fr;gap:10px;padding:10px}
+.match-left{display:flex;flex-direction:column;gap:6px}
+.m-time{color:#9ac0ff;font-weight:700;font-size:13px}
+.m-teams{display:flex;flex-direction:column;gap:2px}
+.m-team{color:#fff;font-weight:700;font-size:14px}
+.m-team .num{display:inline-block;width:16px;text-align:center;opacity:.8;margin-right:4px}
+.m-stats{font-size:12px;color:#aab;display:flex;gap:10px;align-items:center}
+
+/* Right grid: 6 groups columns */
+.match-right{display:grid;grid-template-columns: repeat(6, minmax(120px,1fr));gap:8px}
+.group{display:grid;gap:6px}
+.group .cell{background:#151515;border:1px solid #222;border-radius:8px;padding:6px 8px;text-align:center;font-size:13px}
+.group .val{color:#4da6ff;font-weight:700}
+.group .single{grid-column:1/-1;background:#101010;border:1px solid #333;color:#66b2ff}
+
+/* Hover/press mimic */
+.group .cell:hover{background:rgba(59,132,255,.18);border-color:#365edb}
+
+/* Responsive */
+@media (max-width:1200px){
+  .match-row{grid-template-columns: 240px 1fr}
+.league-cols{grid-template-columns: repeat(6, minmax(100px,1fr))}
+  .match-right{grid-template-columns: repeat(6, minmax(100px,1fr))}
+}
+@media (max-width:860px){
+  .league-cols{display:none}
+  .match-row{grid-template-columns:1fr}
+  .match-right{grid-template-columns: repeat(3, 1fr)} /* 2 hàng x 3 nhóm cho mobile */
+}
+
+/*FOOTER CSS*/
+.site-footer{
+  background:#000;
+  color:#bbb;
+  text-align:center;
+  padding:40px 20px;
+  font-size:14px;
+  line-height:1.6;
+  border-top:1px solid #222;
+}
+.footer-inner{
+  max-width:800px;
+  margin:auto;
+}
+.footer-logo{
+  margin-bottom:10px;
+}
+.logo-text{
+  font-size:28px;
+  font-weight:800;
+  color:#66aaff;
+}
+.logo-text span{
+  color:#fff;
+}
+.footer-desc{
+  margin:10px 0;
+  color:#aaa;
+}
+.footer-meta{
+  margin-top:20px;
+  font-size:13px;
+  color:#777;
+}
+
 </style>
 </head>
 <body>
@@ -159,7 +283,7 @@
 
       <!-- MIDDLE -->
       <main class="middle">
-        <!-- Smart picks -->
+                <!-- Smart picks -->
         <section class="section">
           <div class="row">
             <h3>Smart picks</h3>
@@ -171,6 +295,86 @@
           </div>
           <div class="grid cols-4" id="smart-grid"></div>
         </section>
+        <!-- SECTION: Tennis Matches -->
+        <section class="section matches">
+        <h3>Tennis - Trận đấu nổi bật</h3>
+        <div class="match-header">
+            <button class="tab active">In-Play</button>
+            <button class="tab">Upcoming</button>
+            <button class="tab">Pre-match</button>
+            <button class="tab">Parlay</button>
+            <button class="tab">Outright</button>
+        </div>
+
+        <div class="match-slider" id="tennis-slider">
+            <div class="match-card">
+            <div class="match-time">14-11 00:00</div>
+            <div class="match-title">ATP Paris Masters</div>
+            <div class="match-body">
+                <div class="team red">🇪🇸 Nadal</div>
+                <div class="vs">VS</div>
+                <div class="team white">🇷🇸 Djokovic</div>
+            </div>
+            <div class="match-odds">
+                <span>+1</span><span>1.90</span><span>-1</span><span>1.88</span>
+            </div>
+            </div>
+
+            <div class="match-card">
+            <div class="match-time">14-11 02:00</div>
+            <div class="match-title">WTA Finals</div>
+            <div class="match-body">
+                <div class="team red">🇺🇸 Gauff</div>
+                <div class="vs">VS</div>
+                <div class="team white">🇵🇱 Swiatek</div>
+            </div>
+            <div class="match-odds">
+                <span>+1</span><span>1.83</span><span>-1</span><span>2.02</span>
+            </div>
+            </div>
+
+            <div class="match-card">
+            <div class="match-time">14-11 03:30</div>
+            <div class="match-title">ATP Finals</div>
+            <div class="match-body">
+                <div class="team red">🇨🇭 Federer</div>
+                <div class="vs">VS</div>
+                <div class="team white">🇩🇪 Zverev</div>
+            </div>
+            <div class="match-odds">
+                <span>+1</span><span>1.95</span><span>-1</span><span>1.91</span>
+            </div>
+            </div>
+        </div>
+
+        <button class="scroll-btn left" onclick="scrollMatches('left')">‹</button>
+        <button class="scroll-btn right" onclick="scrollMatches('right')">›</button>
+        </section>
+
+        <!-- SECTION: Sports Odds Table -->
+        <!-- MIDDLE: Detailed Odds Block -->
+        <section class="section odds-board" id="oddsBoard">
+        <div class="sports-tabs">
+            <button class="tab active" data-sport="soccer">⚽ Soccer</button>
+            <button class="tab" data-sport="basketball">🏀 Basketball</button>
+            <button class="tab" data-sport="tennis">🎾 Tennis</button>
+            <button class="tab" data-sport="baseball">⚾ Baseball</button>
+        </div>
+
+        <div class="search-bar">
+            <input id="matchSearch" type="text" placeholder="Search league or team">
+            <label class="switch">
+            <input type="checkbox" id="newbieToggle">
+            <span class="slider"></span>
+            </label>
+            <span class="switch-label">Newbie</span>
+        </div>
+
+        <div id="leaguesWrap"><!-- rendered by JS --></div>
+        </section>
+
+
+
 
         <!-- Leagues -->
         <section class="section">
@@ -192,6 +396,29 @@
           </div>
           <div class="grid cols-2" id="football-grid"></div>
         </section>
+        <!-- ===== FOOTER ===== -->
+        <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+            <span class="logo-text">8X<span>bet</span></span>
+            </div>
+            <p class="footer-desc">
+            8Xbet is a trustworthy online gambling site in Asia. The mission and vision of 8Xbet is to provide honest and trustworthy services. 
+            The recent sponsorship with Chelsea FC, AFC Bournemouth, Sunderland, Leicester City, and Ipswich Town FC has enhanced the reputation of 8Xbet, 
+            and became well known all over the world.
+            </p>
+            <p class="footer-desc">
+            In order to improve the user experience, we may use Cookies technology to collect customer information from the server after using this website. 
+            If you register at 8Xbet or continue to use the site, you will be seen as agreeing to our use of cookies. 
+            Deleting our cookies or disabling our future cookies will prevent you from using certain areas or features of the platform.
+            </p>
+
+            <div class="footer-meta">
+            <p>Server Time: <span id="serverTime"></span> (GMT+07:00)</p>
+            <p>Copyright © 2025 8Xbet Group. All Rights Reserved.</p>
+            </div>
+        </div>
+        </footer>
       </main>
 
       <!-- RIGHT -->
@@ -295,65 +522,254 @@ toggleGlobal.addEventListener('click', ()=> setExpanded(!sidebar.classList.conta
       rotateLive();
     }
   }
+  /*Tennis javascript ở đây nhé */
+function scrollMatches(direction){
+  const slider=document.getElementById('tennis-slider');
+  const scrollAmount = 220; // px per click
+  slider.scrollBy({left: direction==='left'? -scrollAmount: scrollAmount, behavior:'smooth'});
+}
 
-  /* ---------- UI GENERATORS (cards) ---------- */
-  const smartGrid = document.getElementById("smart-grid");
-  const leagueGrid = document.getElementById("league-grid");
-  const featuredGrid = document.getElementById("featured-grid");
-  const footballGrid = document.getElementById("football-grid");
-  const scorebox = document.getElementById("scorebox");
-  const stadiumText = document.getElementById("stadium-text");
 
-  const sampleCards = [
-    {title:"Brighton vs Leeds", tag:"Special", odds:[1.95,3.10,3.75]},
-    {title:"Napoli vs Inter", tag:"Hot", odds:[2.20,3.00,3.20]},
-    {title:"Arsenal vs Wolves", tag:"High", odds:[1.70,3.40,4.50]},
-    {title:"Spurs vs Everton", tag:"Update", odds:[2.05,3.25,3.60]},
-    {title:"PSG vs Monaco", tag:"Top", odds:[1.66,3.70,5.00]},
-    {title:"Bayern vs Freiburg", tag:"Return", odds:[1.55,3.80,6.20]},
-    {title:"Roma vs Lazio", tag:"Derby", odds:[2.40,3.05,3.10]},
-    {title:"Barca vs Girona", tag:"Featured", odds:[1.60,3.90,5.40]},
-  ];
+/** ======= FAKE DATA PER SPORT (giống layout ảnh) MIDDLE thứ 2  ======= */
+const FAKE = {
+  soccer: [
+    {
+      league: "Mexico Liga MX Women Playoff",
+      badge: 42,
+      matches: [
+        {
+          time:"71:49",
+          teams:["Deportivo Toluca FC(W)","CD Guadalajara Chivas(W)"],
+          stats:["0-1","6-2"],
+          hdp:{hLine:"-0/0.5",hOdd:"2.11",aLine:"+0/0.5",aOdd:"1.70"},
+          ou:{oLine:"O 1.5/2",oOdd:"2.03",uLine:"U 1.5/2",uOdd:"1.77"},
+          oneXtwo:{H:"11.5",A:"1.40",D:"3.20"},
+          hGoal:{oLine:"Over 0.5",oOdd:"2.17",uLine:"Under 0.5",uOdd:"1.57"},
+          aGoal:{oLine:"Over 1.5",oOdd:"2.96",uLine:"Under 1.5",uOdd:"1.23"},
+          btts:{yes:"2.20",no:"1.57"}
+        }
+      ]
+    },
+    {
+      league: "USA USL League One Playoff",
+      badge: 6,
+      matches: [
+        {
+          time:"OT 23:23",
+          teams:["Spokane Velocity FC","Portland Hearts of Pine"],
+          stats:["0-1","0-0"],
+          locked:true
+        }
+      ]
+    },
+    {
+      league: "Indonesia Liga 4",
+      badge: 34,
+      matches: [
+        {
+          time:"67:36",
+          teams:["Persikabumi Sukabumi","Cimahi United"],
+          stats:["0-1","1-1"],
+          hdp:{hLine:"0",hOdd:"1.92",aLine:"+0",aOdd:"1.80"},
+          ou:{oLine:"O 1.5/2",oOdd:"1.72",uLine:"U 1.5/2",uOdd:"2.00"},
+          oneXtwo:{H:"12.0",A:"1.25",D:"4.20"},
+          hGoal:{oLine:"Over 0.5",oOdd:"2.26",uLine:"Under 0.5",uOdd:"1.49"},
+          aGoal:{oLine:"Over 1.5",oOdd:"2.20",uLine:"Under 1.5",uOdd:"1.53"},
+          btts:{yes:"2.30",no:"1.50"}
+        }
+      ]
+    }
+  ],
+  basketball: [
+    {
+      league:"NBA Regular Season",
+      badge:12,
+      matches:[{
+        time:"Q4 08:22",
+        teams:["LA Lakers","Golden State Warriors"],
+        stats:["102-99","Series 2-1"],
+        hdp:{hLine:"+4.5",hOdd:"1.90",aLine:"-4.5",aOdd:"1.88"},
+        ou:{oLine:"O 224.5",oOdd:"1.95",uLine:"U 224.5",uOdd:"1.85"},
+        oneXtwo:{H:"2.35",A:"1.60",D:"—"},
+        hGoal:{oLine:"Over 110.5",oOdd:"1.82",uLine:"Under 110.5",uOdd:"1.92"},
+        aGoal:{oLine:"Over 112.5",oOdd:"1.90",uLine:"Under 112.5",uOdd:"1.86"},
+        btts:{yes:"—",no:"—"}
+      }]
+    }
+  ],
+  tennis: [
+    {
+      league:"ATP Paris Masters",
+      badge:9,
+      matches:[{
+        time:"14-11 00:00",
+        teams:["R. Nadal","N. Djokovic"],
+        stats:["0-0","Best of 3"],
+        hdp:{hLine:"+1.5 sets",hOdd:"1.65",aLine:"-1.5 sets",aOdd:"2.10"},
+        ou:{oLine:"O 22.5",oOdd:"1.90",uLine:"U 22.5",uOdd:"1.90"},
+        oneXtwo:{H:"2.75",A:"1.45",D:"—"},
+        hGoal:{oLine:"Over 10.5 g",oOdd:"1.85",uLine:"Under 10.5 g",uOdd:"1.95"},
+        aGoal:{oLine:"Over 11.5 g",oOdd:"1.96",uLine:"Under 11.5 g",uOdd:"1.78"},
+        btts:{yes:"—",no:"—"}
+      }]
+    }
+  ],
+  baseball: [
+    {
+      league:"MLB Playoffs",
+      badge:5,
+      matches:[{
+        time:"Top 7th",
+        teams:["New York Yankees","Boston Red Sox"],
+        stats:["4-3","Series 1-1"],
+hdp:{hLine:"+0.5",hOdd:"1.91",aLine:"-0.5",aOdd:"1.92"},
+        ou:{oLine:"O 8.5",oOdd:"1.88",uLine:"U 8.5",uOdd:"1.94"},
+        oneXtwo:{H:"1.95",A:"1.95",D:"—"},
+        hGoal:{oLine:"Over 4.5",oOdd:"1.90",uLine:"Under 4.5",uOdd:"1.90"},
+        aGoal:{oLine:"Over 4.5",oOdd:"1.92",uLine:"Under 4.5",uOdd:"1.86"},
+        btts:{yes:"—",no:"—"}
+      }]
+    }
+  ]
+};
 
-  function createCard(c){
-    const el = document.createElement("div");
-    el.className = "card";
-    el.innerHTML = `
-      <div class="row">
-        <div style="font-weight:800">${c.title}</div>
-        <div class="badge">${c.tag}</div>
+/** ======= RENDER ======= */
+const leaguesWrap = document.getElementById('leaguesWrap');
+const searchInput = document.getElementById('matchSearch');
+
+function createCell(text, cls="cell"){ const d=document.createElement('div'); d.className=cls; d.textContent=text; return d; }
+
+function renderBoard(sport="soccer", query=""){
+  leaguesWrap.innerHTML="";
+  const q = (query||"").toLowerCase();
+
+  FAKE[sport].forEach(lg=>{
+    // filter by search on league/team names
+    const filtered = lg.matches.filter(m=>{
+      if(!q) return true;
+      return lg.league.toLowerCase().includes(q)
+        || m.teams[0].toLowerCase().includes(q)
+        || m.teams[1].toLowerCase().includes(q);
+    });
+    if(!filtered.length) return;
+
+    // league block
+    const block = document.createElement('div'); block.className="league-block";
+
+    // head row
+    const head = document.createElement('div'); head.className="league-head";
+    head.innerHTML = `
+      <div class="league-name">${lg.league}</div>
+      <div class="league-cols">
+        <span>HDP</span><span>O/U</span><span>1X2</span><span>Home Goal O/U</span><span>Away Goal O/U</span><span>BTTS</span>
       </div>
-      <div class="odds">
-        <div class="odd">1 <span>${c.odds[0]}</span></div>
-        <div class="odd">X <span>${c.odds[1]}</span></div>
-        <div class="odd">2 <span>${c.odds[2]}</span></div>
-      </div>
+      <div class="league-badge">${lg.badge}</div>
     `;
-    setInterval(()=>{
-      const spans = el.querySelectorAll(".odd span");
-      if(!spans.length) return;
-      const i = Math.floor(Math.random()*spans.length);
-      const span = spans[i];
-      const parent = span.parentElement;
-      parent.classList.add("flash");
-      const base = parseFloat(span.textContent);
-      const delta = (Math.random()*0.08-0.04).toFixed(2);
-      const next = Math.max(1.20, (base + parseFloat(delta))).toFixed(2);
-      span.textContent = next;
-      setTimeout(()=>parent.classList.remove("flash"), 650);
-    }, 2400 + Math.random()*1200);
-    return el;
-  }
+    block.appendChild(head);
 
-  function seedGrid(grid, arr, count){
-    grid.innerHTML = "";
-    arr.slice(0,count).forEach(c => grid.appendChild(createCard(c)));
-  }
+    // matches
+    filtered.forEach(m=>{
+      const row = document.createElement('div'); row.className="match-row";
 
-  seedGrid(smartGrid, sampleCards, 4);
-  seedGrid(leagueGrid, sampleCards.slice().reverse(), 4);
-  seedGrid(featuredGrid, sampleCards.slice(2), 3);
-  seedGrid(footballGrid, sampleCards, 6);
+      const left = document.createElement('div'); left.className="match-left";
+      left.innerHTML = `
+        <div class="m-time">${m.time}</div>
+        <div class="m-teams">
+          <div class="m-team"><span class="num">0</span> ${m.teams[0]}</div>
+          <div class="m-team" style="color:#cfd4e6"><span class="num">1</span> ${m.teams[1]}</div>
+        </div>
+        <div class="m-stats">⚽ ${m.stats?.[0]||"-"} · 📊 ${m.stats?.[1]||"-"}</div>
+      `;
+
+      const right = document.createElement('div'); right.className="match-right";
+
+      if(m.locked){
+        // show 6 locked groups
+        for(let i=0;i<6;i++){
+          const g=document.createElement('div'); g.className='group';
+          g.appendChild(createCell('🔒 Locked','cell'));
+          right.appendChild(g);
+        }
+      }else{
+        // 1) HDP
+        const g1=document.createElement('div'); g1.className='group';
+        g1.append(createCell(m.hdp.hLine), createCell(m.hdp.hOdd,'cell val'),
+                  createCell(m.hdp.aLine), createCell(m.hdp.aOdd,'cell val'));
+        right.appendChild(g1);
+
+        // 2) O/U
+        const g2=document.createElement('div'); g2.className='group';
+        g2.append(createCell(m.ou.oLine), createCell(m.ou.oOdd,'cell val'),
+                  createCell(m.ou.uLine), createCell(m.ou.uOdd,'cell val'));
+        right.appendChild(g2);
+
+        // 3) 1X2
+        const g3=document.createElement('div'); g3.className='group';
+        g3.append(createCell('H'), createCell(m.oneXtwo.H,'cell val'),
+                  createCell('A'), createCell(m.oneXtwo.A,'cell val'),
+                  createCell(`D ${m.oneXtwo.D}`,'cell single val'));
+        right.appendChild(g3);
+
+        // 4) Home Goal O/U
+        const g4=document.createElement('div'); g4.className='group';
+        g4.append(createCell(m.hGoal.oLine), createCell(m.hGoal.oOdd,'cell val'),
+                  createCell(m.hGoal.uLine), createCell(m.hGoal.uOdd,'cell val'));
+        right.appendChild(g4);
+
+        // 5) Away Goal O/U
+        const g5=document.createElement('div'); g5.className='group';
+        g5.append(createCell(m.aGoal.oLine), createCell(m.aGoal.oOdd,'cell val'),
+                  createCell(m.aGoal.uLine), createCell(m.aGoal.uOdd,'cell val'));
+        right.appendChild(g5);
+
+        // 6) BTTS
+        const g6=document.createElement('div'); g6.className='group';
+        g6.append(createCell('Yes'), createCell(m.btts.yes,'cell val'),
+                  createCell('No'), createCell(m.btts.no,'cell val'));
+        right.appendChild(g6);
+      }
+
+      row.append(left, right);
+      block.appendChild(row);
+    });
+
+    leaguesWrap.appendChild(block);
+  });
+}
+
+/* Tabs */
+let currentSport = "soccer";
+document.querySelectorAll('#oddsBoard .tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#oddsBoard .tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    currentSport = btn.dataset.sport;
+    renderBoard(currentSport, searchInput.value);
+  });
+});
+
+/*JS phần footer */
+function updateServerTime(){
+  const el=document.getElementById('serverTime');
+  const now=new Date();
+  // hiển thị giờ GMT+7
+  const local=new Date(now.getTime()+7*3600000-now.getTimezoneOffset()*60000);
+  const hh=String(local.getUTCHours()).padStart(2,'0');
+  const mm=String(local.getUTCMinutes()).padStart(2,'0');
+  const ss=String(local.getUTCSeconds()).padStart(2,'0');
+  el.textContent=`${hh}:${mm}:${ss}`;
+}
+setInterval(updateServerTime,1000);
+updateServerTime();
+
+/* Search */
+searchInput.addEventListener('input', ()=>renderBoard(currentSport, searchInput.value));
+
+/* Initial render */
+renderBoard("soccer");
+
+// phần thứ 3 k liên quan middle thứ 2 
+
   
 /* === POPUP EVENTS: mở bằng Log in / Sign up / Send === */
 const overlay = document.getElementById('promo-overlay');
