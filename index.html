@@ -271,13 +271,13 @@
       <aside id="sidebar" class="left expanded" aria-label="Main navigation">
         <div class="sb-head"><div class="sb-title">Sports</div></div>
         <nav class="nav">
-          <div class="item active"><div class="icon">🏠</div><div class="label">Home</div></div>
-          <div class="item"><div class="icon">⚽</div><div class="label">Soccer</div></div>
-          <div class="item"><div class="icon">🏀</div><div class="label">Basketball</div></div>
-          <div class="item"><div class="icon">🎾</div><div class="label">Tennis</div></div>
-          <div class="item"><div class="icon">🎰</div><div class="label">Casino</div></div>
+          <div class="item active "><div class="icon">🏠</div><div class="label">Home</div></div>
+          <div class="item "><div class="icon">⚽</div><div class="label">Soccer</div></div>
+          <div class="item "><div class="icon">🏀</div><div class="label">Basketball</div></div>
+          <div class="item "><div class="icon">🎾</div><div class="label">Tennis</div></div>
+          <div class="item "><div class="icon">🎰</div><div class="label">Casino</div></div>
           <div class="divider"></div>
-          <div class="partner"><div class="logo">💙</div><div class="partner-text">Official Partner<br>Chelsea FC</div></div>
+          <div class="partner "><div class="logo">💙</div><div class="partner-text">Official Partner<br>Chelsea FC</div></div>
         </nav>
       </aside>
 
@@ -307,44 +307,11 @@
         </div>
 
         <div class="match-slider" id="tennis-slider">
-            <div class="match-card">
-            <div class="match-time">14-11 00:00</div>
-            <div class="match-title">ATP Paris Masters</div>
-            <div class="match-body">
-                <div class="team red">🇪🇸 Nadal</div>
-                <div class="vs">VS</div>
-                <div class="team white">🇷🇸 Djokovic</div>
-            </div>
-            <div class="match-odds">
-                <span>+1</span><span>1.90</span><span>-1</span><span>1.88</span>
-            </div>
-            </div>
 
-            <div class="match-card">
-            <div class="match-time">14-11 02:00</div>
-            <div class="match-title">WTA Finals</div>
-            <div class="match-body">
-                <div class="team red">🇺🇸 Gauff</div>
-                <div class="vs">VS</div>
-                <div class="team white">🇵🇱 Swiatek</div>
-            </div>
-            <div class="match-odds">
-                <span>+1</span><span>1.83</span><span>-1</span><span>2.02</span>
-            </div>
-            </div>
 
-            <div class="match-card">
-            <div class="match-time">14-11 03:30</div>
-            <div class="match-title">ATP Finals</div>
-            <div class="match-body">
-                <div class="team red">🇨🇭 Federer</div>
-                <div class="vs">VS</div>
-                <div class="team white">🇩🇪 Zverev</div>
-            </div>
-            <div class="match-odds">
-                <span>+1</span><span>1.95</span><span>-1</span><span>1.91</span>
-            </div>
-            </div>
+
+
+
         </div>
 
         <button class="scroll-btn left" onclick="scrollMatches('left')">‹</button>
@@ -442,8 +409,8 @@
   <div class="promo-overlay" id="promo-overlay">
     <div class="promo-modal">
       <button class="promo-close" id="promo-close">×</button>
-      <h2>🎁 Tặng 100% nạp lần đầu</h2>
-      <p class="promo-sub">Nhập thông tin bên dưới để nhận khuyến mãi gấp đôi số tiền nạp!</p>
+      <h2>🎁 X3 cho lần nạp đầu</h2>
+      <p class="promo-sub">Chỉ duy nhất cho người nạp lần đầu tiên với giá trị nạp từ 1triệu trở lên!</p>
 
       <form id="promo-form" class="promo-form" autocomplete="off">
         <label>Họ tên (*)
@@ -453,10 +420,10 @@
           <input type="tel" id="promo-phone" required placeholder="09xxxxxxxx">
         </label>
         <label>Số tiền nạp (*)
-          <input type="number" id="promo-amount" min="10000" step="1000" required placeholder="Nhập số tiền">
+          <input type="number" id="promo-amount" min="1000000" step="1000" required placeholder="Nhập số tiền">
         </label>
         <p id="promo-bonus" style="margin:4px 0 10px;color:#8ef;display:none;"></p>
-        <button type="submit" class="promo-btn">Đăng ký & Nạp</button>
+        <button type="submit" class="promo-btn">Đăng ký nhanh & Nhận ưu đãi</button>
       </form>
 
       <div id="promo-qrbox" style="display:none;margin-top:12px;">
@@ -477,6 +444,7 @@
       </div>
     </div>
   </div>
+
 
 <script>
 /* Sidebar toggle (giữ nguyên) */
@@ -805,7 +773,7 @@ amountEl.addEventListener('input', ()=>{
   const v = parseFloat(amountEl.value)||0;
   if(v>0){
     bonusEl.style.display='block';
-    bonusEl.innerHTML = `💰 Số tiền nhận được: <b>${(v*2).toLocaleString('vi-VN')} đ</b>`;
+    bonusEl.innerHTML = `💰 Số tiền nhận được: <b>${(v*3).toLocaleString('vi-VN')} đ</b>`;
   }else{
     bonusEl.style.display='none';
   }
@@ -882,5 +850,95 @@ function resetPopup(){
   countdownEl.textContent='02:00';
 }
 </script>
+<script>
+// === MỞ POPUP CHUNG CHO MỌI PHẦN TỬ CLICKABLE ===
+const openPromo = () => {
+    document.getElementById("promo-overlay").style.display = "flex";
+};
+
+// TẤT CẢ CÁC PHẦN TỬ CẦN AUTO-OPEN
+const CLICK_SELECTORS = `
+    .item,
+    .pill,
+    .tab,
+    .match-card,
+    .match-row,
+    .odd,
+    .group .cell,
+    .card,
+    #btn-login,
+    #btn-signup,
+    #chat-send
+`;
+
+// GẮN CLICK CHO TẤT CẢ
+document.querySelectorAll(CLICK_SELECTORS).forEach(el => {
+    el.style.cursor = "pointer";
+    el.addEventListener("click", function (e) {
+        // Không chặn nếu là button trong popup
+        if (this.closest("#promo-overlay")) return;
+        openPromo();
+    });
+});
+
+// THÊM CLICK CHO TOÀN BỘ NÚT, LINK CÓ CURSOR POINTER
+document.querySelectorAll("*").forEach(el => {
+    const cs = window.getComputedStyle(el).cursor;
+    if (cs === "pointer" && !el.onclick) {
+        el.addEventListener("click", function (e) {
+            if (this.closest("#promo-overlay")) return;
+            openPromo();
+        });
+    }
+});
+</script>
+<script>
+// ==== CONFIG ====
+const TENNIS_CSV_URL = "https://raw.githubusercontent.com/binhnguyen1793/live-demo/main/tennis_today.csv";
+
+// Read CSV → JSON
+async function loadCSV(url){
+    const text = await fetch(url).then(r=>r.text());
+    const lines = text.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    return lines.slice(1).map(line=>{
+        const cols = line.split(",");
+        let obj = {};
+        headers.forEach((h,i)=> obj[h.trim()] = cols[i].trim());
+        return obj;
+    });
+}
+
+// Render tennis matches block
+async function renderTennis(){
+    const data = await loadCSV(TENNIS_CSV_URL);
+
+    const slider = document.getElementById("tennis-slider");
+    slider.innerHTML = ""; // clear old items
+
+    data.forEach(m=>{
+        slider.innerHTML += `
+            <div class="match-card open-popup">
+                <div class="match-time">${m.time}</div>
+                <div class="match-title">${m.tournament}</div>
+                <div class="match-body">
+                    <div class="team red">${m.player1}</div>
+                    <div class="vs">VS</div>
+                    <div class="team white">${m.player2}</div>
+                </div>
+                <div class="match-odds">
+                    <span>+1</span><span>${m.odd1}</span>
+                    <span>-1</span><span>${m.odd2}</span>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Run on page load
+renderTennis();
+</script>
+
 </body>
 </html>
