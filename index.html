@@ -10,11 +10,39 @@
     --line:#242424; --text:#e8e8f2; --text-dim:#c8cbe0;
     --hover-bg: rgba(39,99,255,.25);
     --active-1:#4C9EEA; --active-2:#50BDFF; --brand:#3b84ff;
-    --pad:16px; --left-col:280px; --right-col:360px;
+    --pad:16px; --left-col:180px; --right-col:360px;
+    --odds-row-h: 56px;
+    --odds-gap: 6px;
+    --odds-col: 110px;
+    --left-col-fixed: 240px;
+  --odds-col-min: 72px;   /* nhỏ nhất vẫn đọc được */
+  --odds-col-max: 110px;  /* lớn nhất không bị dài ngoằng */
+
   }
+
+  /* ===== ROW HEIGHT SYNC (ODDS BOARD CORE FIX) ===== */
+
+
   @media (max-width:1200px){ :root{ --left-col:260px; --right-col:320px; } }
   @media (max-width:990px){ :root{ --left-col:86px; --right-col:0px; } }
   @media (max-width:640px){ :root{ --left-col:0px; --right-col:0px; } }
+
+  html, body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "SF Pro Display",
+    system-ui,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+}
+
 
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -44,7 +72,7 @@
   .btn.primary:hover{filter:saturate(1.05); transform:translateY(-1px)}
 
   /* LAYOUT */
-  .layout{display:grid;grid-template-columns: 280px 1fr 360px; gap:16px; padding:16px; height:100%}
+  .layout{display:grid;grid-template-columns: var(--left-col) minmax(0,1fr) var(--right-col); gap:16px; padding:16px; height:100%}
   @media (max-width:1200px){ .layout{grid-template-columns:260px 1fr 320px} }
   @media (max-width:990px){ .layout{grid-template-columns: 86px 1fr} .right{display:none} }
   @media (max-width:640px){ .layout{grid-template-columns: 1fr} .left{display:none} }
@@ -55,8 +83,13 @@
   .left .sb-title{color:#fff;font-weight:400;letter-spacing:.4px}
   .left .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}
   .left .item{display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;cursor:pointer;transition: background .18s, box-shadow .18s, color .18s, border-color .18s;border:1px solid transparent;color:#e9edff; white-space:nowrap}
-  .left .item .icon{width:30px;height:30px;display:grid;place-items:center;font-size:20px;flex:0 0 30px; color:#ffffff;filter: drop-shadow(0 1px 0 rgba(0,0,0,.5))}
-  .left .item .label{font-weight:400; letter-spacing:.2px; opacity:.88}
+  .left .item .icon{width:30px;height:30px;display:grid;place-items:center;font-size:20px;flex:0 0 30px; color:#e29a9a;filter: drop-shadow(0 1px 0 rgba(0,0,0,.5))}
+  .left .item .label{
+    margin-left:-17px;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(200, 205, 220, 0.72);
+    letter-spacing:.2px; opacity:.88}
   .left .item:hover{background:var(--hover-bg);border-color:#2a4ddf;box-shadow: inset 0 0 0 1px rgba(42,77,223,.35), 0 2px 6px rgba(0,0,0,.5);color:#ffffff}
   .left .item.active{background:linear-gradient(90deg,var(--active-1),var(--active-2));color:#ffffff;border-color:#3b84ff;box-shadow: 0 2px 6px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.06)}
   .left .divider{height:1px;background:var(--line);margin:8px 0}
@@ -64,10 +97,20 @@
   .left .partner .logo{width:24px;height:24px;display:grid;place-items:center;background:#0f0f0f;border:1px solid var(--line);border-radius:6px}
   .left.collapsed{width:86px; padding:10px 8px 12px}
   .left.collapsed .label, .left.collapsed .sb-title, .left.collapsed .partner-text{display:none}
-  .left.expanded{width:280px}
+  .left.expanded{width:180px}
 
   /* Middle */
-  .middle{min-width:0}
+  .middle{
+  min-width:0;
+  overflow:hidden;
+  display:flex;
+  justify-content:flex-start; /* tạo khoảng trống khi màn hình to */
+}
+
+.middle-inner{
+  width:100%;
+  max-width:1280px;   /* 🔥 con số vàng cho odds 6 cột */
+}
   .section{background:linear-gradient(180deg,var(--panel),#0f173b 80%); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:16px}
   .section h3{color:#fff;margin:0 0 10px;font-size:16px}
   .chips{display:flex;gap:10px;flex-wrap:wrap}
@@ -84,8 +127,19 @@
   .card:hover{transform:translateY(-2px); box-shadow:0 0 0 1px var(--brand) inset, 0 8px 24px rgba(0,0,0,.35)}
   .card .badge{position:absolute;top:10px;right:10px;font-size:11px;padding:4px 8px;border-radius:999px;background:linear-gradient(90deg,#20c997,#42f5b3); color:#012016; font-weight:400}
   .odds{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
-  .odd{background:#16234e;border:1px solid #273b82;color:#e6ecff;border-radius:10px; padding:8px;text-align:center;font-weight:400;cursor:pointer;transition:.18s}
-  .odd:hover{transform:translateY(-1px); box-shadow: 0 0 0 1px var(--brand)}
+  .odd{
+    color:#313237;
+    padding:8px;
+    text-align:center;
+    font-weight:400;
+    width:100%;
+    cursor:pointer;transition:.18s
+  }
+  .odds{
+  display:grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap:6px;
+}
   .odd.flash{animation:flash .8s ease}
   @keyframes flash{ 0%{box-shadow:0 0 0 0 rgba(255,255,255,0)} 50%{box-shadow:0 0 0 3px rgba(69,208,255,.25)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
 
@@ -171,41 +225,272 @@
 
 /* League block */
 .league-block{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
-.league-head{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--line)}
-.league-name{font-weight:400;color:#9ac0ff}
-.league-cols{display:grid;grid-template-columns: repeat(6, minmax(120px,1fr));gap:8px;text-align:center;font-size:12px;color:#bfc7da}
-.league-badge{font-size:12px;background:#0f0f0f;border:1px solid var(--line);color:#9ac0ff;border-radius:999px;padding:2px 8px}
+.league-head{
+  display:grid;
+  grid-template-columns: var(--left-col-fixed) repeat(6, var(--odds-col));
+  align-items:center;
+  padding:10px;
+  border-bottom:1px solid var(--line);
+  gap:8px;
+}
+.league-head span{
+  text-align:center;
+  font-size:12px;
+  color:#8f96a8;
+}
+
+.league-name{
+  font-weight:400;
+  color:#9ac0ff;
+}
+
+
+
+.league-cols span{
+  text-align:center;
+  font-size:12px;
+  color:#8f96a8;
+}
+
+
 
 /* Match row */
-.match-row{display:grid;grid-template-columns: 280px 1fr;gap:10px;padding:10px}
-.match-left{display:flex;flex-direction:column;gap:6px}
-.m-time{color:#9ac0ff;font-weight:400;font-size:13px}
-.m-teams{display:flex;flex-direction:column;gap:2px}
-.m-team{color:#fff;font-weight:400;font-size:14px}
-.m-team .num{display:inline-block;width:16px;text-align:center;opacity:.8;margin-right:4px}
+.match-row{
+  display:grid;
+  grid-template-columns: minmax(260px,1fr) repeat(6,110px);
+  gap:8px;
+  padding:10px;
+  align-items: stretch;
+}
+.match-row:nth-child(even){
+  background:#141414;
+}
+
+.match-row:hover{
+  background:#1b1b1b;
+}
+
+.league-block{
+  background:#161616;
+}
+
+.match-left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.m-time{
+  font-size:12px;
+  color:#66aaff;
+}
+.m-teams{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.m-score{
+  font-size:12px;
+  color:#9aa3b2;
+  display:flex;
+  gap:8px;
+}
+
+
 .m-stats{font-size:12px;color:#aab;display:flex;gap:10px;align-items:center}
 
 /* Right grid: 6 groups columns */
-.match-right{display:grid;grid-template-columns: repeat(6, minmax(120px,1fr));gap:8px}
-.group{display:grid;gap:6px}
-.group .cell{background:#151515;border:1px solid #222;border-radius:8px;padding:6px 8px;text-align:center;font-size:13px}
-.group .val{color:#4da6ff;font-weight:400}
-.group .single{grid-column:1/-1;background:#101010;border:1px solid #333;color:#66b2ff}
+.match-right{
+  display:contents;
+}
 
-/* Hover/press mimic */
-.group .cell:hover{background:rgba(59,132,255,.18);border-color:#365edb}
+
+
+/* ===== COMPACT MODE: CHỈ HIỂN THỊ 3 NHÓM ĐẦU ===== */
+
+/* vẫn giữ 6 cột để không phá layout */
+/* thu dần cột */
+
+
+/* ẨN 3 nhóm phía sau */
+.middle.compact-odds .match-right .market:nth-child(n+4){
+  display:none;
+}
+
+
+
+/* Header cũng đổi theo */
+.middle.compact-odds .league-cols{
+  display:block; /* hoặc block cũng được */
+}
+/* ===== Odds cells like ảnh chuẩn (1 ô = 1 lựa chọn) ===== */
+
+/* mỗi market = 1 cột dọc */
+
+/* ===== ODDS STYLE – giống ảnh chuẩn ===== */
+
+/* mỗi market = 1 cột */
+.market{
+  display:grid;
+  grid-template-rows: repeat(3, var(--odds-row-h));
+  gap: var(--odds-gap);
+}
+
+.market.x12 .odd-btn{
+  min-height: 44px;
+}
+
+
+
+/* 1 ô odds */
+/* ===== ODDS CELL – STYLE GIỐNG ẢNH CHUẨN ===== */
+
+.odd-btn{
+  width:100%;
+  min-width: var(--odds-col-min);
+  max-width: var(--odds-col-max);
+  background: linear-gradient(180deg, #1e232b, #181c22);
+  border: 1px solid #2a2f38;
+  border-radius: 12px;
+
+  padding: 10px 6px;
+  min-height: var(--odds-row-h);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  text-align: center;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    box-shadow .15s ease,
+    transform .12s ease;
+}
+
+/* label nhỏ */
+.odd-btn .label{
+  font-size: 11px;
+  font-weight: 400;
+  color: #9aa3b2;
+  margin-bottom: 4px;
+}
+
+/* số odds */
+.odd-btn .odd{
+  font-size: 15px;
+  font-weight: 600;
+  color: #f5f7ff;
+}
+.odd-btn.empty{
+  visibility: hidden;   /* ẩn nhưng vẫn chiếm chỗ */
+}
+/* ===== HOVER – xanh như ảnh chuẩn ===== */
+.odd-btn:hover{
+  background: linear-gradient(180deg, #2f6bff, #2a5de0);
+  border-color: #4c9eff;
+  transform: translateY(-1px);
+}
+
+.odd-btn:hover .label{
+  color: rgba(255,255,255,.9);
+}
+
+.odd-btn:hover .odd{
+  color: #ffffff;
+}
+
+/* ===== LOCKED ===== */
+.odd-btn.locked{
+  background: #15181d;
+  border-color: #20242b;
+  cursor: not-allowed;
+}
+
+.odd-btn.locked .label,
+.odd-btn.locked .odd{
+  color: #6f7685;
+}
+
+.team-cell{
+  font-size:14px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.team-cell .num{
+  width:18px;
+  text-align:center;
+  opacity:.6;
+}
+.team-cell.draw{
+  color:#9aa3b2;
+}
+
 
 /* Responsive */
+/* Responsive – giữ chuẩn cột */
 @media (max-width:1200px){
-  .match-row{grid-template-columns: 240px 1fr}
-.league-cols{grid-template-columns: repeat(6, minmax(100px,1fr))}
-  .match-right{grid-template-columns: repeat(6, minmax(100px,1fr))}
+
+  /* Header + row dùng chung grid */
+  .league-head,
+  .match-row{
+    grid-template-columns: 240px repeat(3, 1fr);
+  }
+  /* Ẩn cột 4-5-6 toàn bộ */
+  .league-cols span:nth-child(n+4),
+  .team-row .odds .odd-btn:nth-child(n+4),
+  .extra-row .odds div:nth-child(n+4){
+    display:none;
+  }
+  .odds{
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* TUYỆT ĐỐI KHÔNG ĐỘNG VÀO */
+  .match-right{
+    display: contents;
+  }
+
+  .score-row{
+    grid-template-columns: 240px repeat(3,1fr);
+  }
 }
+
 @media (max-width:860px){
-  .league-cols{display:none}
-  .match-row{grid-template-columns:1fr}
-  .match-right{grid-template-columns: repeat(3, 1fr)} /* 2 hàng x 3 nhóm cho mobile */
+
+  /* Ẩn header cột */
+  .league-cols{
+    display:none;
+  }
+
+  /* Vẫn giữ LEFT + 2 market */
+  .match-row{
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:8px;
+  }
+
+  /* Ẩn từ market thứ 3 trở đi */
+  .match-row .market:nth-child(n+3){
+    display:none;
+  }
+
+  /* GIỮ nguyên – không được đổi */
+  .match-right{
+    display: contents;
+  }
+
+  .match-row > *{
+    min-width:0;
+  }
+  .score-row{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
+
 
 /*FOOTER CSS*/
 .site-footer{
@@ -242,6 +527,166 @@
   color:#777;
 }
 
+/* ===== Sidebar list giống ảnh mẫu ===== */
+.left .item{
+  display:grid;
+  grid-template-columns: 30px 1fr auto 13px;
+  align-items:center;
+}
+
+.left .item .meta{
+  justify-self:end;
+  text-align:right;
+  font-weight:400;
+  opacity:.9;
+}
+
+.left .item .meta.count{
+  color:#66aaff;
+  font-size:13px;
+  letter-spacing:.2px;
+}
+
+.left .item .chev{
+  justify-self:center;
+  color:#7a7a7a;
+  font-size:20px;
+  line-height:1;
+  opacity:.85;
+}
+
+/* active giống pill xanh của ảnh */
+.left .item.active{
+  border-color:transparent;
+}
+.left .item.active .chev,
+.left .item.active .meta{
+  color:#07121a;
+  opacity:1;
+}
+
+/* Khi collapsed: ẩn label + meta + chev (giữ icon) */
+.left.collapsed .meta,
+.left.collapsed .chev{
+  display:none;
+}
+
+/* Subtitle + sponsor */
+.sb-subtitle{
+  margin:6px 8px 4px;
+  font-size:14px;
+  color:#aab0c6;
+  opacity:.85;
+}
+
+.sponsor-card{
+  margin:6px 8px 8px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#0f0f0f;
+}
+
+.sponsor-card img{
+  width:100%;
+  display:block;
+}
+/*mất dần khoảng trống*/
+@media (max-width:1500px){
+  .middle-inner{
+    max-width:1100px;
+  }
+}
+@media (max-width:1200px){
+  .middle-inner{
+    max-width:100%;
+  }
+}
+/* phần thêm */
+.right.auto-hidden{
+  display:none !important;
+}
+.odds-board{
+  overflow-x:auto;
+}
+.match-block{
+  padding:12px;
+  border-bottom:1px solid #222;
+}
+
+.match-meta{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:#66aaff;
+  margin-bottom:6px;
+}
+
+.team-row{
+  display:grid;
+  grid-template-columns: 240px 1fr;
+  align-items:center;
+  margin-bottom:6px;
+}
+
+.team{
+  display:flex;
+  gap:8px;
+  color:#fff;
+}
+
+.team .score{
+  width:18px;
+  color:#66aaff;
+}
+
+.odds{
+  display:grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap:6px;
+}
+
+.extra-row{
+  display:grid;
+  grid-template-columns: 240px 1fr;
+  margin-top:4px;
+}
+.extra-row .odds{
+  display:grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.extra-row .odds div{
+  min-height: var(--odds-row-h);
+}
+.mini-score{
+  font-size:12px;
+  color:#aaa;
+}
+/* line màu xanh */
+.odd-btn .line{
+  font-size: 11px;
+  color: #4c9eff;
+  margin-bottom: 2px;
+}
+
+/* odds trắng */
+.odd-btn .odd{
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  transition: color .25s ease;
+}
+
+/* tăng */
+.odd-btn .odd.up{
+  color: #00e676;
+}
+
+/* giảm */
+.odd-btn .odd.down{
+  color: #ff5252;
+}
 </style>
 </head>
 <body>
@@ -270,19 +715,120 @@
       <!-- LEFT -->
       <aside id="sidebar" class="left expanded" aria-label="Main navigation">
         <div class="sb-head"><div class="sb-title">Sports</div></div>
-        <nav class="nav">
-          <div class="item active "><div class="icon">🏠</div><div class="label">Home</div></div>
-          <div class="item "><div class="icon">⚽</div><div class="label">Soccer</div></div>
-          <div class="item "><div class="icon">🏀</div><div class="label">Basketball</div></div>
-          <div class="item "><div class="icon">🎾</div><div class="label">Tennis</div></div>
-          <div class="item "><div class="icon">🎰</div><div class="label">Casino</div></div>
-          <div class="divider"></div>
-          <div class="partner "><div class="logo">💙</div><div class="partner-text">Official Partner<br>Chelsea FC</div></div>
-        </nav>
+          <nav class="nav">
+            <!-- Trang Chủ -->
+            <div class="item active">
+              <div class="icon">🏠</div>
+              <div class="label">Trang Chủ</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Bóng đá -->
+            <div class="item">
+              <div class="icon">⚽</div>
+              <div class="label">Bóng Đá</div>
+              <div class="meta count">1681</div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Bóng rổ -->
+            <div class="item">
+              <div class="icon">🏀</div>
+              <div class="label">Bóng Rổ</div>
+              <div class="meta count">730</div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Quần vợt -->
+            <div class="item">
+              <div class="icon">🎾</div>
+              <div class="label">Quần Vợt</div>
+              <div class="meta count">566</div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Bóng chày -->
+            <div class="item">
+              <div class="icon">⚾</div>
+              <div class="label">Bóng Chày</div>
+              <div class="meta count">15</div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Casino -->
+            <div class="item">
+              <div class="icon">🃏</div>
+              <div class="label">Casino</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Jackpot -->
+            <div class="item">
+              <div class="icon">🎰</div>
+              <div class="label">Jackpot</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Kết quả -->
+            <div class="item">
+              <div class="icon">📊</div>
+              <div class="label">Kết Quả</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Lịch sử -->
+            <div class="item">
+              <div class="icon">📜</div>
+              <div class="label">Lịch Sử</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Tài Trợ -->
+            <div class="sb-subtitle">Tài Trợ</div>
+            <div class="sponsor-card">
+              <!-- bạn thay src bằng ảnh bạn muốn -->
+              <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=900&q=60" alt="Sponsor">
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Khuyến mãi -->
+            <div class="item">
+              <div class="icon">🎁</div>
+              <div class="label">Khuyến Mãi</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Tài khoản -->
+            <div class="item">
+              <div class="icon">⚙️</div>
+              <div class="label">Tài Khoản</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+
+            <!-- Tìm kiếm -->
+            <div class="item">
+              <div class="icon">🔍</div>
+              <div class="label">Tìm kiếm</div>
+              <div class="meta"></div>
+              <div class="chev">›</div>
+            </div>
+          </nav>
+
       </aside>
 
       <!-- MIDDLE -->
       <main class="middle">
+        <div class="middle-inner">
                 <!-- Smart picks -->
         <section class="section">
           <div class="row">
@@ -370,13 +916,13 @@
             <span class="logo-text">8X<span>bet</span></span>
             </div>
             <p class="footer-desc">
-            8Xbet is a trustworthy online gambling site in Asia. The mission and vision of 8Xbet is to provide honest and trustworthy services. 
-            The recent sponsorship with Chelsea FC, AFC Bournemouth, Sunderland, Leicester City, and Ipswich Town FC has enhanced the reputation of 8Xbet, 
+            8Xbet is a trustworthy online gambling site in Asia. The mission and vision of 8Xbet is to provide honest and trustworthy services.
+            The recent sponsorship with Chelsea FC, AFC Bournemouth, Sunderland, Leicester City, and Ipswich Town FC has enhanced the reputation of 8Xbet,
             and became well known all over the world.
             </p>
             <p class="footer-desc">
-            In order to improve the user experience, we may use Cookies technology to collect customer information from the server after using this website. 
-            If you register at 8Xbet or continue to use the site, you will be seen as agreeing to our use of cookies. 
+            In order to improve the user experience, we may use Cookies technology to collect customer information from the server after using this website.
+            If you register at 8Xbet or continue to use the site, you will be seen as agreeing to our use of cookies.
             Deleting our cookies or disabling our future cookies will prevent you from using certain areas or features of the platform.
             </p>
 
@@ -386,6 +932,7 @@
             </div>
         </div>
         </footer>
+        </div>
       </main>
 
       <!-- RIGHT -->
@@ -447,6 +994,7 @@
 
 
 <script>
+
 /* Sidebar toggle (giữ nguyên) */
 const sidebar = document.getElementById('sidebar');
 const toggleGlobal = document.getElementById('toggleGlobal');
@@ -454,48 +1002,50 @@ function setExpanded(exp){
   if(exp){ sidebar.classList.add('expanded'); sidebar.classList.remove('collapsed'); toggleGlobal.textContent='«'; }
   else{ sidebar.classList.add('collapsed'); sidebar.classList.remove('expanded'); toggleGlobal.textContent='»'; }
 }
-setExpanded(true);
+function autoSidebar(){
+  if(window.innerWidth >= 1200){
+    setExpanded(true);   // desktop lớn → mở
+  }else{
+    setExpanded(false);  // nhỏ hơn → đóng
+  }
+}
+
+// chạy khi load
+autoSidebar();
+
+// chạy khi resize
+window.addEventListener('resize', autoSidebar);
 toggleGlobal.addEventListener('click', ()=> setExpanded(!sidebar.classList.contains('expanded')));
 
-  /* ---------- DATA + FETCH FROM GITHUB ---------- */
-  const GITHUB_URL = "https://raw.githubusercontent.com/<username>/live-demosports/main/matches.json";
-  const fallbackMatches = [
-    {home:"Austria (W)",away:"Czech Republic (W)",score:"0-0",note:"Czech pressing ⚽"},
-    {home:"Manchester Utd",away:"Chelsea",score:"2-1",note:"Corner to MU"},
-    {home:"Real Madrid",away:"Barcelona",score:"1-0",note:"Yellow card to Barca"},
-    {home:"Arsenal",away:"Liverpool",score:"1-1",note:"Possession 58% - 42%"},
-    {home:"Bayern",away:"Dortmund",score:"3-2",note:"Dangerous shot"},
-    {home:"PSG",away:"Marseille",score:"0-0",note:"Tight game"},
-    {home:"Inter",away:"AC Milan",score:"1-0",note:"Left-wing attack"},
-    {home:"Ajax",away:"PSV",score:"2-2",note:"VAR checking"}
-  ];
-  let matches = fallbackMatches.slice();
 
-  async function loadMatches(){
-    try{
-      const r = await fetch(GITHUB_URL, {cache:"no-store"});
-      if(!r.ok) throw new Error("HTTP "+r.status);
-      const data = await r.json();
-      if(Array.isArray(data) && data.length){
-        matches = data.map(x => ({
-          home: String(x.home||"Home"),
-          away: String(x.away||"Away"),
-          score: String(x.score||"0-0"),
-          note: String(x.note||"Live now")
-        }));
-      }
-    }catch(e){
-      /* keep fallback */
-    }finally{
-      rotateLive();
-    }
-  }
   /*Tennis javascript ở đây nhé */
 function scrollMatches(direction){
   const slider=document.getElementById('tennis-slider');
   const scrollAmount = 220; // px per click
   slider.scrollBy({left: direction==='left'? -scrollAmount: scrollAmount, behavior:'smooth'});
 }
+
+/** ưu tiên middle */
+const middle = document.querySelector('.middle');
+const rightPanel = document.querySelector('.right');
+
+/**
+ * Ngưỡng tối thiểu để odds-board + game hiển thị đẹp
+ * (6 cột, không co xấu)
+ */
+const FULL_ODDS_WIDTH = 1050;
+
+function updateOddsLayout(){
+  const w = middle.getBoundingClientRect().width;
+  const compact = w < FULL_ODDS_WIDTH;
+
+  middle.classList.toggle('compact-odds', compact);
+  rightPanel.classList.toggle('auto-hidden', compact);
+}
+
+updateOddsLayout();
+window.addEventListener('resize', updateOddsLayout);
+
 
 
 /** ======= FAKE DATA PER SPORT (giống layout ảnh) MIDDLE thứ 2  ======= */
@@ -515,18 +1065,6 @@ const FAKE = {
           hGoal:{oLine:"Over 0.5",oOdd:"2.17",uLine:"Under 0.5",uOdd:"1.57"},
           aGoal:{oLine:"Over 1.5",oOdd:"2.96",uLine:"Under 1.5",uOdd:"1.23"},
           btts:{yes:"2.20",no:"1.57"}
-        }
-      ]
-    },
-    {
-      league: "USA USL League One Playoff",
-      badge: 6,
-      matches: [
-        {
-          time:"OT 23:23",
-          teams:["Spokane Velocity FC","Portland Hearts of Pine"],
-          stats:["0-1","0-0"],
-          locked:true
         }
       ]
     },
@@ -600,19 +1138,273 @@ hdp:{hLine:"+0.5",hOdd:"1.91",aLine:"-0.5",aOdd:"1.92"},
     }
   ]
 };
+async function loadCSV(url){
+  const res = await fetch(url);
+  const text = await res.text();
+
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",");
+
+  return lines.slice(1).map(line=>{
+    const cols = line.split(",");
+    let obj = {};
+    headers.forEach((h,i)=> obj[h.trim()] = cols[i]?.trim());
+    return obj;
+  });
+}
+function convertToFAKE(data){
+  const leagues = {};
+
+  data.forEach(row=>{
+    const lg = row.league;
+
+    if(!leagues[lg]){
+      leagues[lg] = {
+        league: lg,
+        matches: []
+      };
+    }
+
+    leagues[lg].matches.push({
+      timestart: row.timestart,
+      teams: [row.name_1, row.name_2],
+      stats: ["0-0",""],
+
+      // random odds
+      hdp:{
+        hLine:"-0/0.5",
+        hOdd: randOdd(),
+        aLine:"+0/0.5",
+        aOdd: randOdd()
+      },
+      ou:{
+        oLine:"O 2.5",
+        oOdd: randOdd(),
+        uLine:"U 2.5",
+        uOdd: randOdd()
+      },
+      oneXtwo:{
+        H: randOdd(),
+        A: randOdd(),
+        D: randOdd()
+      },
+      hGoal:{
+        oLine:"Over 0.5",
+        oOdd: randOdd(),
+        uLine:"Under 0.5",
+        uOdd: randOdd()
+      },
+      aGoal:{
+        oLine:"Over 1.5",
+        oOdd: randOdd(),
+        uLine:"Under 1.5",
+        uOdd: randOdd()
+      },
+      btts:{
+        yes: randOdd(),
+        no: randOdd()
+      }
+    });
+  });
+
+  return Object.values(leagues);
+}
+function randOdd(){
+  return (Math.random() * (6 - 1) + 1).toFixed(2);
+}
+function getMatchMinute(startTime){
+  const now = new Date();
+
+  const [h,m] = startTime.split(":").map(Number);
+  const start = new Date();
+  start.setHours(h, m, 0, 0);
+
+  const diff = (now - start) / 60000; // phút
+
+  if(diff < 0) return null; // chưa tới giờ
+  if(diff > 90) return "FT";
+
+  return Math.floor(diff) + "'";
+}
+
 
 /** ======= RENDER ======= */
 const leaguesWrap = document.getElementById('leaguesWrap');
 const searchInput = document.getElementById('matchSearch');
 
-function createCell(text, cls="cell"){ const d=document.createElement('div'); d.className=cls; d.textContent=text; return d; }
+function odd(label, value, locked=false){
+  const d = document.createElement("div");
+  d.className = "odd-btn" + (locked ? " locked" : "");
+  d.innerHTML = `
+    <div class="label">${label ?? ""}</div>
+    <div class="odd">${value ?? ""}</div>
+  `;
+  return d;
+}
+
+function market(items){
+  const m = document.createElement("div");
+  m.className = "market";
+  items.forEach(i => m.appendChild(i));
+  return m;
+}
+
+
+function renderMatch(block, m){
+  const row = document.createElement("div");
+  row.className = "match-block";
+  const matchMinute = getMatchMinute(m.timestart);
+  if(matchMinute === null) return; // chưa tới giờ → không render
+
+  row.innerHTML = `
+    <!-- ROW 2: TIME -->
+    <div class="match-meta">
+      <div class="time">${matchMinute}</div>
+      <div class="badge">▶ ${row["51"] || "51"}</div>
+    </div>
+
+    <!-- ROW 3: TEAM 1 -->
+    <div class="team-row">
+      <div class="team">
+        <span class="score">${m.stats ? m.stats[0].split('-')[0] : ''}</span>
+        ${m.teams[0]}
+      </div>
+      <div class="odds">
+        ${renderOddsRow(m, "home")}
+      </div>
+    </div>
+
+    <!-- ROW 4: TEAM 2 -->
+    <div class="team-row">
+      <div class="team">
+        <span class="score">${m.stats ? m.stats[0].split('-')[1] : ''}</span>
+        ${m.teams[1]}
+      </div>
+      <div class="odds">
+        ${renderOddsRow(m, "away")}
+      </div>
+    </div>
+
+    <!-- ROW 5 -->
+    <div class="extra-row">
+      <div class="mini-score">${m.stats ? m.stats[0] : ''}</div>
+      <div class="odds extra">
+        ${renderExtraOdds(m)}
+      </div>
+    </div>
+  `;
+
+  block.appendChild(row);
+}
+function renderOddsRow(m, side){
+  if(!m.hdp) return "";
+
+  if(side === "home"){
+    return `
+      <div class="odd-btn">
+        <div class="line">${m.hdp.hLine}</div>
+        <div class="odd">${m.hdp.hOdd}</div>
+      </div>
+
+      <div class="odd-btn">
+        <div class="line">${m.ou.oLine}</div>
+        <div class="odd">${m.ou.oOdd}</div>
+      </div>
+
+      <div class="odd-btn">
+        <div class="line"></div>
+        <div class="odd">${m.oneXtwo.H}</div>
+      </div>
+
+      <div class="odd-btn">
+        <div class="line">${m.hGoal.oLine}</div>
+        <div class="odd">${m.hGoal.oOdd}</div>
+      </div>
+
+      <div class="odd-btn">
+        <div class="line">${m.aGoal.oLine}</div>
+        <div class="odd">${m.aGoal.oOdd}</div>
+      </div>
+
+      <div class="odd-btn">
+        <div class="line"></div>
+        <div class="odd">${m.btts?.yes || ""}</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="odd-btn">
+      <div class="line">${m.hdp.aLine}</div>
+      <div class="odd">${m.hdp.aOdd}</div>
+    </div>
+
+    <div class="odd-btn">
+      <div class="line">${m.ou.uLine}</div>
+      <div class="odd">${m.ou.uOdd}</div>
+    </div>
+
+    <div class="odd-btn">
+      <div class="line"></div>
+      <div class="odd">${m.oneXtwo.A}</div>
+    </div>
+
+    <div class="odd-btn">
+      <div class="line">${m.hGoal.uLine}</div>
+      <div class="odd">${m.hGoal.uOdd}</div>
+    </div>
+
+    <div class="odd-btn">
+      <div class="line">${m.aGoal.uLine}</div>
+      <div class="odd">${m.aGoal.uOdd}</div>
+    </div>
+
+    <div class="odd-btn">
+      <div class="line"></div>
+      <div class="odd">${m.btts?.no || ""}</div>
+    </div>
+  `;
+}
+function updateOdd(el, newValue){
+  const oddEl = el.querySelector(".odd");
+  const oldValue = parseFloat(oddEl.textContent);
+
+  if(isNaN(oldValue)){
+    oddEl.textContent = newValue;
+    return;
+  }
+
+  if(newValue > oldValue){
+    oddEl.classList.add("up");
+  }else if(newValue < oldValue){
+    oddEl.classList.add("down");
+  }
+
+  oddEl.textContent = newValue.toFixed(2);
+
+  setTimeout(()=>{
+    oddEl.classList.remove("up","down");
+  }, 800);
+}
+function renderExtraOdds(m){
+  return `
+    <div class="odd-btn empty"></div>
+    <div class="odd-btn empty"></div>
+
+    <div class="odd-btn">3</div>
+
+    <div class="odd-btn empty"></div>
+    <div class="odd-btn empty"></div>
+
+    <div class="odd-btn">6</div>
+  `;
+}
 
 function renderBoard(sport="soccer", query=""){
   leaguesWrap.innerHTML="";
   const q = (query||"").toLowerCase();
 
   FAKE[sport].forEach(lg=>{
-    // filter by search on league/team names
     const filtered = lg.matches.filter(m=>{
       if(!q) return true;
       return lg.league.toLowerCase().includes(q)
@@ -621,89 +1413,30 @@ function renderBoard(sport="soccer", query=""){
     });
     if(!filtered.length) return;
 
-    // league block
-    const block = document.createElement('div'); block.className="league-block";
+    const block = document.createElement('div');
+    block.className="league-block";
 
-    // head row
-    const head = document.createElement('div'); head.className="league-head";
-    head.innerHTML = `
-      <div class="league-name">${lg.league}</div>
-      <div class="league-cols">
-        <span>HDP</span><span>O/U</span><span>1X2</span><span>Home Goal O/U</span><span>Away Goal O/U</span><span>BTTS</span>
-      </div>
-      <div class="league-badge">${lg.badge}</div>
-    `;
+    const head = document.createElement('div');
+    head.className="league-head";
+head.innerHTML = `
+  <div class="league-name">${lg.league}</div>
+
+  <span>HDP</span>
+  <span>O/U</span>
+  <span>1X2</span>
+  <span>Home Goal O/U</span>
+  <span>Away Goal O/U</span>
+  <span>BTTS</span>
+`;
     block.appendChild(head);
 
-    // matches
-    filtered.forEach(m=>{
-      const row = document.createElement('div'); row.className="match-row";
-
-      const left = document.createElement('div'); left.className="match-left";
-      left.innerHTML = `
-        <div class="m-time">${m.time}</div>
-        <div class="m-teams">
-          <div class="m-team"><span class="num">0</span> ${m.teams[0]}</div>
-          <div class="m-team" style="color:#cfd4e6"><span class="num">1</span> ${m.teams[1]}</div>
-        </div>
-        <div class="m-stats">⚽ ${m.stats?.[0]||"-"} · 📊 ${m.stats?.[1]||"-"}</div>
-      `;
-
-      const right = document.createElement('div'); right.className="match-right";
-
-      if(m.locked){
-        // show 6 locked groups
-        for(let i=0;i<6;i++){
-          const g=document.createElement('div'); g.className='group';
-          g.appendChild(createCell('🔒 Locked','cell'));
-          right.appendChild(g);
-        }
-      }else{
-        // 1) HDP
-        const g1=document.createElement('div'); g1.className='group';
-        g1.append(createCell(m.hdp.hLine), createCell(m.hdp.hOdd,'cell val'),
-                  createCell(m.hdp.aLine), createCell(m.hdp.aOdd,'cell val'));
-        right.appendChild(g1);
-
-        // 2) O/U
-        const g2=document.createElement('div'); g2.className='group';
-        g2.append(createCell(m.ou.oLine), createCell(m.ou.oOdd,'cell val'),
-                  createCell(m.ou.uLine), createCell(m.ou.uOdd,'cell val'));
-        right.appendChild(g2);
-
-        // 3) 1X2
-        const g3=document.createElement('div'); g3.className='group';
-        g3.append(createCell('H'), createCell(m.oneXtwo.H,'cell val'),
-                  createCell('A'), createCell(m.oneXtwo.A,'cell val'),
-                  createCell(`D ${m.oneXtwo.D}`,'cell single val'));
-        right.appendChild(g3);
-
-        // 4) Home Goal O/U
-        const g4=document.createElement('div'); g4.className='group';
-        g4.append(createCell(m.hGoal.oLine), createCell(m.hGoal.oOdd,'cell val'),
-                  createCell(m.hGoal.uLine), createCell(m.hGoal.uOdd,'cell val'));
-        right.appendChild(g4);
-
-        // 5) Away Goal O/U
-        const g5=document.createElement('div'); g5.className='group';
-        g5.append(createCell(m.aGoal.oLine), createCell(m.aGoal.oOdd,'cell val'),
-                  createCell(m.aGoal.uLine), createCell(m.aGoal.uOdd,'cell val'));
-        right.appendChild(g5);
-
-        // 6) BTTS
-        const g6=document.createElement('div'); g6.className='group';
-        g6.append(createCell('Yes'), createCell(m.btts.yes,'cell val'),
-                  createCell('No'), createCell(m.btts.no,'cell val'));
-        right.appendChild(g6);
-      }
-
-      row.append(left, right);
-      block.appendChild(row);
-    });
-
+    filtered.forEach(m => renderMatch(block, m));
     leaguesWrap.appendChild(block);
+
+
   });
 }
+
 
 /* Tabs */
 let currentSport = "soccer";
@@ -736,9 +1469,9 @@ searchInput.addEventListener('input', ()=>renderBoard(currentSport, searchInput.
 /* Initial render */
 renderBoard("soccer");
 
-// phần thứ 3 k liên quan middle thứ 2 
+// phần thứ 3 k liên quan middle thứ 2
 
-  
+
 /* === POPUP EVENTS: mở bằng Log in / Sign up / Send === */
 const overlay = document.getElementById('promo-overlay');
 const closeBtn = document.getElementById('promo-close');
