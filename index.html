@@ -1138,95 +1138,6 @@ hdp:{hLine:"+0.5",hOdd:"1.91",aLine:"-0.5",aOdd:"1.92"},
     }
   ]
 };
-async function loadCSV(url){
-  const res = await fetch(url);
-  const text = await res.text();
-
-  const lines = text.trim().split("\n");
-  const headers = lines[0].split(",");
-
-  return lines.slice(1).map(line=>{
-    const cols = line.split(",");
-    let obj = {};
-    headers.forEach((h,i)=> obj[h.trim()] = cols[i]?.trim());
-    return obj;
-  });
-}
-function convertToFAKE(data){
-  const leagues = {};
-
-  data.forEach(row=>{
-    const lg = row.league;
-
-    if(!leagues[lg]){
-      leagues[lg] = {
-        league: lg,
-        matches: []
-      };
-    }
-
-    leagues[lg].matches.push({
-      timestart: row.timestart,
-      teams: [row.name_1, row.name_2],
-      stats: ["0-0",""],
-
-      // random odds
-      hdp:{
-        hLine:"-0/0.5",
-        hOdd: randOdd(),
-        aLine:"+0/0.5",
-        aOdd: randOdd()
-      },
-      ou:{
-        oLine:"O 2.5",
-        oOdd: randOdd(),
-        uLine:"U 2.5",
-        uOdd: randOdd()
-      },
-      oneXtwo:{
-        H: randOdd(),
-        A: randOdd(),
-        D: randOdd()
-      },
-      hGoal:{
-        oLine:"Over 0.5",
-        oOdd: randOdd(),
-        uLine:"Under 0.5",
-        uOdd: randOdd()
-      },
-      aGoal:{
-        oLine:"Over 1.5",
-        oOdd: randOdd(),
-        uLine:"Under 1.5",
-        uOdd: randOdd()
-      },
-      btts:{
-        yes: randOdd(),
-        no: randOdd()
-      }
-    });
-  });
-
-  return Object.values(leagues);
-}
-function randOdd(){
-  return (Math.random() * (6 - 1) + 1).toFixed(2);
-}
-function getMatchMinute(startTime){
-  const now = new Date();
-
-  const [h,m] = startTime.split(":").map(Number);
-  const start = new Date();
-  start.setHours(h, m, 0, 0);
-
-  const diff = (now - start) / 60000; // phút
-
-  if(diff < 0) return null; // chưa tới giờ
-  if(diff > 90) return "FT";
-
-  return Math.floor(diff) + "'";
-}
-
 
 /** ======= RENDER ======= */
 const leaguesWrap = document.getElementById('leaguesWrap');
@@ -1253,14 +1164,12 @@ function market(items){
 function renderMatch(block, m){
   const row = document.createElement("div");
   row.className = "match-block";
-  const matchMinute = getMatchMinute(m.timestart);
-  if(matchMinute === null) return; // chưa tới giờ → không render
 
   row.innerHTML = `
     <!-- ROW 2: TIME -->
     <div class="match-meta">
-      <div class="time">${matchMinute}</div>
-      <div class="badge">▶ ${row["51"] || "51"}</div>
+      <div class="time">${m.time}</div>
+      <div class="badge">▶ 51</div>
     </div>
 
     <!-- ROW 3: TEAM 1 -->
